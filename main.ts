@@ -84,7 +84,23 @@ short_scale_names = [
 " million",
 " billion",
 " trillion",
-" quadrillion"
+" quadrillion",
+" quintillion",
+" sextillion",
+" septillion",
+" octillion",
+" nonillion",
+" decillion",
+" undecillion",
+" duodecillion",
+" tredecillion",
+" quattuordecillion",
+" quindecillion",
+" sexdecillion",
+" septendecillion",
+" octodecillion",
+" novemdecillion",
+" vigintillion"
 ]
 scene.setBackgroundColor(14)
 scene.setBackgroundImage(assets.image`background`)
@@ -97,9 +113,6 @@ game.onUpdate(function () {
     text_sprite_money.setText("Money: $" + round_to(money / short_scale_divider(money), 2) + short_scale_name(money))
     text_sprite_fossil_price.setText("Price: $" + round_to(fossil_price / short_scale_divider(fossil_price), 2) + short_scale_name(fossil_price))
     text_sprite_fossils_per_second.setText("F/s: " + round_to(fossils_per_second / short_scale_divider(fossils_per_second), 3) + short_scale_name(fossils_per_second))
-})
-game.onUpdate(function () {
-    fossil_price += fossil_price * 0.2
 })
 forever(function () {
     if (game.runtime() < big_icon_until) {
