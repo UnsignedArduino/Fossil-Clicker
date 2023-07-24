@@ -4,7 +4,9 @@
     "dependencies": {
         "device": "*",
         "arcade-text": "github:microsoft/arcade-text#v1.3.0",
-        "arcade-sprite-util": "github:jwunderl/arcade-sprite-util#v0.4.0"
+        "arcade-sprite-util": "github:jwunderl/arcade-sprite-util#v0.4.0",
+        "arcade-sprite-data": "github:microsoft/arcade-sprite-data#v0.2.1",
+        "arcade-mini-menu": "github:riknoll/arcade-mini-menu#c8b01b9d47f85a5133c786f1c026b1f376fe4285"
     },
     "files": [
         "main.blocks",

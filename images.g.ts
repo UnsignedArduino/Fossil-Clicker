@@ -176,6 +176,52 @@ eeeeeeeeeffbdddbfeeeeeeeeeeeeeeeeeeeeeeeeeeeef..................................
 eeeeeeeeffddfffffeeeeeeeeeeeeeeeeeeeeeeeeeeeef..................................................................................................................
 eeeeeeeffddffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef..................................................................................................................
 `;
+            case "image5":
+            case "miner_icon_selected":return img`
+ffffffffffffffffffff
+f333333333333333333f
+f3333333ffff3333333f
+f33333fff22fff33333f
+f3333fff2222fff3333f
+f333fffeeeeeefff333f
+f333ffe222222eef333f
+f333fe2ffffff2ef333f
+f333ffffeeeeffff333f
+f33ffefbf44fbfeff33f
+f33fee41fddf14eef33f
+f333feeddddddeef333f
+f3333fee4444eef3333f
+f333e4f222222f4e333f
+f3334df222222fd4333f
+f33344f445544f44333f
+f333333ffffff333333f
+f333333ff33ff333333f
+f333333333333333333f
+ffffffffffffffffffff
+`;
+            case "image6":
+            case "miner_icon":return img`
+ffffffffffffffffffff
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbffffbbbbbbbf
+fbbbbbfff22fffbbbbbf
+fbbbbfff2222fffbbbbf
+fbbbfffeeeeeefffbbbf
+fbbbffe222222eefbbbf
+fbbbfe2ffffff2efbbbf
+fbbbffffeeeeffffbbbf
+fbbffefbf44fbfeffbbf
+fbbfee41fddf14eefbbf
+fbbbfeeddddddeefbbbf
+fbbbbfee4444eefbbbbf
+fbbbe4f222222f4ebbbf
+fbbb4df222222fd4bbbf
+fbbb44f445544f44bbbf
+fbbbbbbffffffbbbbbbf
+fbbbbbbffbbffbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+ffffffffffffffffffff
+`;
         }
         return null;
     })
