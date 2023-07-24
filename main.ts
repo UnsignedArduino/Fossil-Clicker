@@ -20,6 +20,14 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         click_main_icon()
     }
 })
+function short_scale_divider (num: number) {
+    for (let index = 0; index <= short_scale_names.length; index++) {
+        if (num < 10 ** ((index + 1) * 3) || index == short_scale_names.length - 1) {
+            return 10 ** (index * 3)
+        }
+    }
+    return 0
+}
 function create_main_icon () {
     sprite_main_icon = sprites.create(assets.image`shovel`, SpriteKind.Player)
     sprite_main_icon.left = 10
@@ -32,6 +40,17 @@ function create_cursor () {
     sprite_cursor_image = sprites.create(assets.image`cursor_image`, SpriteKind.Player)
     sprite_cursor_image.setFlag(SpriteFlag.Ghost, true)
     sprite_cursor_image.z = 100
+}
+function round_to (num: number, places: number) {
+    return Math.round(num * 10 ** places) / 10 ** places
+}
+function short_scale_name (num: number) {
+    for (let index = 0; index <= short_scale_names.length; index++) {
+        if (num < 10 ** ((index + 1) * 3) || index == short_scale_names.length - 1) {
+            return short_scale_names[index]
+        }
+    }
+    return 1
 }
 function click_main_icon () {
     big_icon_until = game.runtime() + 100
@@ -52,10 +71,21 @@ let local_text_sprite: TextSprite = null
 let text_sprite_fossils_per_second: TextSprite = null
 let text_sprite_fossil_price: TextSprite = null
 let text_sprite_money: TextSprite = null
+let short_scale_names: string[] = []
 let fossil_price = 0
 let money = 0
 fossil_price = 1
 let fossils_per_second = 0
+// https://en.wikipedia.org/wiki/Long_and_short_scales
+// https://en.wikipedia.org/wiki/Names_of_large_numbers
+short_scale_names = [
+"",
+"k",
+" million",
+" billion",
+" trillion",
+" quadrillion"
+]
 scene.setBackgroundColor(14)
 scene.setBackgroundImage(assets.image`background`)
 create_cursor()
@@ -64,9 +94,12 @@ create_ui()
 game.onUpdate(function () {
     sprite_cursor_image.top = sprite_cursor.top
     sprite_cursor_image.left = sprite_cursor.left
-    text_sprite_money.setText("Money: $" + money)
-    text_sprite_fossil_price.setText("Fossil price: $" + fossil_price)
-    text_sprite_fossils_per_second.setText("Fossils/second: " + fossils_per_second)
+    text_sprite_money.setText("Money: $" + round_to(money / short_scale_divider(money), 2) + short_scale_name(money))
+    text_sprite_fossil_price.setText("Price: $" + round_to(fossil_price / short_scale_divider(fossil_price), 2) + short_scale_name(fossil_price))
+    text_sprite_fossils_per_second.setText("F/s: " + round_to(fossils_per_second / short_scale_divider(fossils_per_second), 3) + short_scale_name(fossils_per_second))
+})
+game.onUpdate(function () {
+    fossil_price += fossil_price * 0.2
 })
 forever(function () {
     if (game.runtime() < big_icon_until) {
