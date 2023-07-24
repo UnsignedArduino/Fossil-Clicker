@@ -110,6 +110,7 @@ let short_scale_names: string[] = []
 let fossils_per_second = 0
 let fossil_price = 0
 let money = 0
+stats.turnStats(true)
 money = 0
 fossil_price = 1
 fossils_per_second = 0
