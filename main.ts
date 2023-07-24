@@ -1,7 +1,7 @@
 function create_top_section () {
-    text_sprite_money = create_label("Money: $" + money, 3, 3)
-    text_sprite_fossils = create_label("Fossils: " + fossils, 12, 3)
-    text_sprite_fossils_per_second = create_label("Fossils/second: " + fossils_per_second, 21, 3)
+    text_sprite_money = create_label("", 3, 3)
+    text_sprite_fossil_price = create_label("", 12, 3)
+    text_sprite_fossils_per_second = create_label("", 21, 3)
 }
 function create_ui () {
     create_top_section()
@@ -35,7 +35,7 @@ function create_cursor () {
 }
 function click_main_icon () {
     big_icon_until = game.runtime() + 100
-    fossils += 1
+    money += fossil_price
 }
 function enable_cursor (en: boolean) {
     if (en) {
@@ -50,14 +50,12 @@ let sprite_cursor: Sprite = null
 let sprite_main_icon: Sprite = null
 let local_text_sprite: TextSprite = null
 let text_sprite_fossils_per_second: TextSprite = null
-let text_sprite_fossils: TextSprite = null
+let text_sprite_fossil_price: TextSprite = null
 let text_sprite_money: TextSprite = null
-let fossils_per_second = 0
-let fossils = 0
+let fossil_price = 0
 let money = 0
-money = 100
-fossils = 100
-fossils_per_second = 0
+fossil_price = 1
+let fossils_per_second = 0
 scene.setBackgroundColor(14)
 scene.setBackgroundImage(assets.image`background`)
 create_cursor()
@@ -67,7 +65,7 @@ game.onUpdate(function () {
     sprite_cursor_image.top = sprite_cursor.top
     sprite_cursor_image.left = sprite_cursor.left
     text_sprite_money.setText("Money: $" + money)
-    text_sprite_fossils.setText("Fossils: " + fossils)
+    text_sprite_fossil_price.setText("Fossil price: $" + fossil_price)
     text_sprite_fossils_per_second.setText("Fossils/second: " + fossils_per_second)
 })
 forever(function () {
