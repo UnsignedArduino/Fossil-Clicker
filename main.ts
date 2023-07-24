@@ -1,9 +1,9 @@
 function create_cursor () {
     sprite_cursor = sprites.create(assets.image`cursor_pixel`, SpriteKind.Player)
     sprite_cursor.setFlag(SpriteFlag.Invisible, true)
+    sprite_cursor.setFlag(SpriteFlag.StayInScreen, true)
     sprite_cursor_image = sprites.create(assets.image`cursor_image`, SpriteKind.Player)
     sprite_cursor_image.setFlag(SpriteFlag.Ghost, true)
-    scene.cameraFollowSprite(sprite_cursor)
 }
 function enable_cursor (en: boolean) {
     if (en) {
@@ -14,6 +14,7 @@ function enable_cursor (en: boolean) {
 }
 let sprite_cursor_image: Sprite = null
 let sprite_cursor: Sprite = null
+scene.setBackgroundColor(14)
 create_cursor()
 enable_cursor(true)
 game.onUpdate(function () {
