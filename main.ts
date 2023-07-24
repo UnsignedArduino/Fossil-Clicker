@@ -1,22 +1,18 @@
 function create_top_section () {
-    text_sprite_money = textsprite.create("Money: $" + money, 0, 15)
-    text_sprite_money.top = 3
-    text_sprite_money.left = 3
-    text_sprite_money.setFlag(SpriteFlag.Ghost, true)
-    text_sprite_money.setFlag(SpriteFlag.RelativeToCamera, true)
-    text_sprite_fossils = textsprite.create("Fossils: " + fossils, 0, 15)
-    text_sprite_fossils.top = 12
-    text_sprite_fossils.left = 3
-    text_sprite_fossils.setFlag(SpriteFlag.Ghost, true)
-    text_sprite_fossils.setFlag(SpriteFlag.RelativeToCamera, true)
-    text_sprite_fossils_per_second = textsprite.create("Fossils/second: " + fossils_per_second, 0, 15)
-    text_sprite_fossils_per_second.top = 21
-    text_sprite_fossils_per_second.left = 3
-    text_sprite_fossils_per_second.setFlag(SpriteFlag.Ghost, true)
-    text_sprite_fossils_per_second.setFlag(SpriteFlag.RelativeToCamera, true)
+    text_sprite_money = create_label("Money: $" + money, 3, 3)
+    text_sprite_fossils = create_label("Fossils: " + fossils, 12, 3)
+    text_sprite_fossils_per_second = create_label("Fossils/second: " + fossils_per_second, 21, 3)
 }
 function create_ui () {
     create_top_section()
+}
+function create_label (text: string, top: number, left: number) {
+    local_text_sprite = textsprite.create(text, 0, 15)
+    local_text_sprite.top = top
+    local_text_sprite.left = left
+    local_text_sprite.setFlag(SpriteFlag.Ghost, true)
+    local_text_sprite.setFlag(SpriteFlag.RelativeToCamera, true)
+    return local_text_sprite
 }
 function create_cursor () {
     sprite_cursor = sprites.create(assets.image`cursor_pixel`, SpriteKind.Player)
@@ -35,6 +31,7 @@ function enable_cursor (en: boolean) {
 }
 let sprite_cursor_image: Sprite = null
 let sprite_cursor: Sprite = null
+let local_text_sprite: TextSprite = null
 let text_sprite_fossils_per_second: TextSprite = null
 let text_sprite_fossils: TextSprite = null
 let text_sprite_money: TextSprite = null
