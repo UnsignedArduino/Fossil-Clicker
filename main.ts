@@ -30,7 +30,8 @@ function short_scale_divider (num: number) {
     return 0
 }
 function create_towers () {
-    create_tower("Miner", 0.1, 34, 48, assets.image`miner_icon`, assets.image`miner_icon_selected`)
+    create_tower("Assistant", 0.1, 34, 48, assets.image`assistant_icon`, assets.image`assistant_icon_selected`, 10)
+    create_tower("Paleontologist", 0.5, 56, 48, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 50)
 }
 function create_main_icon () {
     sprite_main_icon = sprites.create(assets.image`shovel`, SpriteKind.Player)
@@ -50,6 +51,19 @@ function create_cursor () {
     sprite_cursor_image.setFlag(SpriteFlag.Ghost, true)
     sprite_cursor_image.z = 100
 }
+function calculate_sell_price (tower_in_list: Sprite[]) {
+    local_sprite = tower_in_list[0]
+    return Math.round(sprites.readDataNumber(local_sprite, "price") + (sprites.readDataNumber(local_sprite, "count") - 1) ** 1.25)
+}
+function update_tower_button (text_sprite_in_list: TextSprite[]) {
+    local_text_sprite = text_sprite_in_list[0]
+    local_text_sprite.setText(" " + sprites.readDataString(local_text_sprite, "name"))
+    if (sprite_cursor.overlapsWith(local_text_sprite)) {
+        local_text_sprite.setIcon(sprites.readDataImage(local_text_sprite, "icon_hover"))
+    } else {
+        local_text_sprite.setIcon(sprites.readDataImage(local_text_sprite, "icon"))
+    }
+}
 function round_to (num: number, places: number) {
     return Math.round(num * 10 ** places) / 10 ** places
 }
@@ -65,15 +79,6 @@ function click_main_icon () {
     big_icon_until = game.runtime() + 100
     money += fossil_price
 }
-function update_tower_text (text_sprite_in_list: TextSprite[]) {
-    local_text_sprite = text_sprite_in_list[0]
-    local_text_sprite.setText(" [" + sprites.readDataNumber(local_text_sprite, "count") + "] " + sprites.readDataString(local_text_sprite, "name") + "")
-    if (sprite_cursor.overlapsWith(local_text_sprite)) {
-        local_text_sprite.setIcon(sprites.readDataImage(local_text_sprite, "icon_hover"))
-    } else {
-        local_text_sprite.setIcon(sprites.readDataImage(local_text_sprite, "icon"))
-    }
-}
 function enable_cursor (en: boolean) {
     if (en) {
         controller.moveSprite(sprite_cursor)
@@ -81,7 +86,11 @@ function enable_cursor (en: boolean) {
         controller.moveSprite(sprite_cursor, 0, 0)
     }
 }
-function create_tower (name: string, speed: number, top: number, left: number, icon: Image, icon_hover: Image) {
+function calculate_buy_price (tower_in_list: Sprite[]) {
+    local_sprite = tower_in_list[0]
+    return Math.round(sprites.readDataNumber(local_sprite, "price") + sprites.readDataNumber(local_sprite, "count") ** 1.25)
+}
+function create_tower (name: string, speed: number, top: number, left: number, icon: Image, icon_hover: Image, price: number) {
     if (!(sprites_towers)) {
         sprites_towers = []
     }
@@ -92,13 +101,15 @@ function create_tower (name: string, speed: number, top: number, left: number, i
     sprites.setDataString(local_text_sprite, "name", name)
     sprites.setDataNumber(local_text_sprite, "speed", speed)
     sprites.setDataNumber(local_text_sprite, "count", 0)
+    sprites.setDataNumber(local_text_sprite, "price", price)
     sprites.setDataImageValue(local_text_sprite, "icon", icon)
     sprites.setDataImageValue(local_text_sprite, "icon_hover", icon_hover)
-    update_tower_text([local_text_sprite])
+    update_tower_button([local_text_sprite])
     sprites_towers.push(local_text_sprite)
 }
 let sprites_towers: TextSprite[] = []
 let big_icon_until = 0
+let local_sprite: Sprite = null
 let sprite_cursor_image: Sprite = null
 let sprite_cursor: Sprite = null
 let sprite_main_icon: Sprite = null
@@ -160,6 +171,6 @@ game.onUpdate(function () {
     }
     update_top_bar_text()
     for (let value of sprites_towers) {
-        update_tower_text([value])
+        update_tower_button([value])
     }
 })

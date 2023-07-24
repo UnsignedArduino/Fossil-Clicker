@@ -176,8 +176,31 @@ eeeeeeeeeffbdddbfeeeeeeeeeeeeeeeeeeeeeeeeeeeef..................................
 eeeeeeeeffddfffffeeeeeeeeeeeeeeeeeeeeeeeeeeeef..................................................................................................................
 eeeeeeeffddffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef..................................................................................................................
 `;
+            case "image6":
+            case "paleontologist_icon":return img`
+ffffffffffffffffffff
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbffffbbbbbbbf
+fbbbbbfff22fffbbbbbf
+fbbbbfff2222fffbbbbf
+fbbbfffeeeeeefffbbbf
+fbbbffe222222eefbbbf
+fbbbfe2ffffff2efbbbf
+fbbbffffeeeeffffbbbf
+fbbffefbf44fbfeffbbf
+fbbfee41fddf14eefbbf
+fbbbfeeddddddeefbbbf
+fbbbbfee4444eefbbbbf
+fbbbe4f222222f4ebbbf
+fbbb4df222222fd4bbbf
+fbbb44f445544f44bbbf
+fbbbbbbffffffbbbbbbf
+fbbbbbbffbbffbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+ffffffffffffffffffff
+`;
             case "image5":
-            case "miner_icon_selected":return img`
+            case "paleontologist_icon_selected":return img`
 ffffffffffffffffffff
 f333333333333333333f
 f3333333ffff3333333f
@@ -199,27 +222,50 @@ f333333ff33ff333333f
 f333333333333333333f
 ffffffffffffffffffff
 `;
-            case "image6":
-            case "miner_icon":return img`
+            case "image7":
+            case "assistant_icon":return img`
 ffffffffffffffffffff
 fbbbbbbbbbbbbbbbbbbf
 fbbbbbbbffffbbbbbbbf
-fbbbbbfff22fffbbbbbf
-fbbbbfff2222fffbbbbf
-fbbbfffeeeeeefffbbbf
-fbbbffe222222eefbbbf
-fbbbfe2ffffff2efbbbf
-fbbbffffeeeeffffbbbf
-fbbffefbf44fbfeffbbf
-fbbfee41fddf14eefbbf
-fbbbfeeddddddeefbbbf
-fbbbbfee4444eefbbbbf
-fbbbe4f222222f4ebbbf
-fbbb4df222222fd4bbbf
-fbbb44f445544f44bbbf
+fbbbbbffffffffbbbbbf
+fbbbbffffffcfffbbbbf
+fbbbffffffccfffcbbbf
+fbbbfffcfffffffcbbbf
+fbbbcccfffeeffccbbbf
+fbbbfffffeeffccfbbbf
+fbbbfffbfeefbfffbbbf
+fbbbbf41f44f14fbbbbf
+fbbbbfe444444efbbbbf
+fbbbbfffeeeefffbbbbf
+fbbbfefb7777bfefbbbf
+fbbbe4f777777f4ebbbf
+fbbbeef666666feebbbf
 fbbbbbbffffffbbbbbbf
 fbbbbbbffbbffbbbbbbf
 fbbbbbbbbbbbbbbbbbbf
+ffffffffffffffffffff
+`;
+            case "image8":
+            case "assistant_icon_selected":return img`
+ffffffffffffffffffff
+f333333333333333333f
+f3333333ffff3333333f
+f33333ffffffff33333f
+f3333ffffffcfff3333f
+f333ffffffccfffc333f
+f333fffcfffffffc333f
+f333cccfffeeffcc333f
+f333fffffeeffccf333f
+f333fffbfeefbfff333f
+f3333f41f44f14f3333f
+f3333fe444444ef3333f
+f3333fffeeeefff3333f
+f333fefb7777bfef333f
+f333e4f777777f4e333f
+f333eef666666fee333f
+f333333ffffff333333f
+f333333ff33ff333333f
+f333333333333333333f
 ffffffffffffffffffff
 `;
         }
