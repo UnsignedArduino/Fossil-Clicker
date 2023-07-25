@@ -61,10 +61,16 @@ function create_towers () {
 function show_tower_menu (tower_in_list: Sprite[]) {
     enable_cursor(false)
     local_sprite = tower_in_list[0]
-    menu_items_tower = [miniMenu.createMenuItem("Cancel"), miniMenu.createMenuItem("Buy 1 (" + format_money(calculate_buy_price(tower_in_list, 1)) + ")"), miniMenu.createMenuItem("Buy...")]
+    menu_items_tower = [
+    miniMenu.createMenuItem("Cancel"),
+    miniMenu.createMenuItem("Buy 1 (" + format_money(calculate_buy_price(tower_in_list, 1)) + ")"),
+    miniMenu.createMenuItem("Buy..."),
+    miniMenu.createMenuItem("Buy max")
+    ]
     if (sprites.readDataNumber(local_sprite, "count") > 0) {
         menu_items_tower.push(miniMenu.createMenuItem("Sell 1 (" + format_money(calculate_sell_price(tower_in_list, 1)) + ")"))
         menu_items_tower.push(miniMenu.createMenuItem("Sell..."))
+        menu_items_tower.push(miniMenu.createMenuItem("Sell all"))
     }
     menu_tower = miniMenu.createMenuFromArray(menu_items_tower)
     menu_tower.setTitle("" + sprites.readDataString(local_sprite, "name") + " (" + sprites.readDataNumber(local_sprite, "count") + ")")
@@ -87,7 +93,7 @@ function show_tower_menu (tower_in_list: Sprite[]) {
             })
             return
         } else if (selectedIndex == 1) {
-            try_buy_tower(tower_in_list[0], 1)
+            try_buy_tower(tower_in_list[0], 1, true)
         } else if (selectedIndex == 2) {
             while (true) {
                 local_quantity = game.askForNumber("Purchase amount: (Blank to cancel)", 6)
@@ -98,13 +104,25 @@ function show_tower_menu (tower_in_list: Sprite[]) {
                     game.showLongText("Quantity must be a natural number!", DialogLayout.Bottom)
                     continue;
                 }
-                if (try_buy_tower(tower_in_list[0], local_quantity)) {
+                if (try_buy_tower(tower_in_list[0], local_quantity, true)) {
                     break;
                 }
             }
         } else if (selectedIndex == 3) {
-            try_sell_tower(tower_in_list[0], 1)
+            menu_tower.setButtonEventsEnabled(false)
+            local_buy = 1
+            while (try_buy_tower(tower_in_list[0], local_buy, false)) {
+                local_buy += 1
+            }
+            for (let index = 0; index < local_buy; index++) {
+                local_buy += -1
+                if (try_buy_tower(tower_in_list[0], local_buy, false)) {
+                    break;
+                }
+            }
         } else if (selectedIndex == 4) {
+            try_sell_tower(tower_in_list[0], 1)
+        } else if (selectedIndex == 5) {
             while (true) {
                 local_quantity = game.askForNumber("Sell amount: (Blank to cancel)", 6)
                 if (is_nan(local_quantity) || local_quantity == 0) {
@@ -118,6 +136,8 @@ function show_tower_menu (tower_in_list: Sprite[]) {
                     break;
                 }
             }
+        } else if (selectedIndex == 6) {
+            try_sell_tower(tower_in_list[0], sprites.readDataNumber(tower_in_list[0], "count"))
         }
         sprites.destroy(menu_tower)
         show_tower_menu(tower_in_list)
@@ -220,14 +240,16 @@ function create_tower (name: string, speed: number, top: number, left: number, i
     update_tower_button([local_sprite])
     text_sprites_towers.push(local_sprite)
 }
-function try_buy_tower (tower: Sprite, count: number) {
+function try_buy_tower (tower: Sprite, count: number, show_msgs: boolean) {
     local_price = calculate_buy_price([tower], count)
     if (money >= local_price) {
         money += local_price * -1
         sprites.changeDataNumberBy(tower, "count", count)
         return true
     } else {
-        game.showLongText("Not enough money! (Price of " + format_money(local_price) + ")", DialogLayout.Bottom)
+        if (show_msgs) {
+            game.showLongText("Not enough money! (Price of " + format_money(local_price) + ")", DialogLayout.Bottom)
+        }
         return false
     }
 }
@@ -235,6 +257,7 @@ let local_price = 0
 let big_icon_until = 0
 let local_sum = 0
 let sprite_cursor_image: Sprite = null
+let local_buy = 0
 let local_quantity = 0
 let last_menu_index = 0
 let menu_tower: miniMenu.MenuSprite = null
@@ -257,7 +280,7 @@ DEBUG = true
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
-    money = 1000
+    money = 100000000000000
 }
 fossil_price = 1
 fossils_per_second = 0
