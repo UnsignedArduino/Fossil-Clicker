@@ -49,6 +49,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "mining_team_icon_selected"
     },
+    "image11": {
+        "data": "hwQUABQAAAD/////////////AAC/u7u7u7u7u7v7AAC/u7u7u/+/u7v7AAC/u7u7//X+u7v7AAC/u7v7Vf/+u/v7AAC/u/tf//v+u//7AAC/+1/1u/u/+7/7AAC/X/W/u7u7u7/7AAC/X7+7+///+/z7AAC/X7/7//n/+//7AAC/+/X/mfn1+/z7AAC/u1+fmfn1///7AAC/u/ufmf/1/Pz7AAC/u7ufmV/1/P/7AAC/u7v//1/1//z7AAC/u7u7+1X1+//7AAC/u7u7+1X1+/z7AAC/u7u7+///u7/7AAC/u7u7u7u7u7v7AAD/////////////AAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "excavator_icon"
+    },
+    "image12": {
+        "data": "hwQUABQAAAD/////////////AAA/MzMzMzMzMzPzAAA/MzMzM/8/MzPzAAA/MzMz//X+MzPzAAA/MzPzVf/+M/PzAAA/M/Nf//P+M//zAAA/81/1M/M/8z/zAAA/X/U/MzMzMz/zAAA/Xz8z8///8/zzAAA/Xz/z//n/8//zAAA/8/X/mfn18/zzAAA/M1+fmfn1///zAAA/M/Ofmf/1/PzzAAA/MzOfmV/1/P/zAAA/MzP//1/1//zzAAA/MzMz81X18//zAAA/MzMz81X18/zzAAA/MzMz8///Mz/zAAA/MzMzMzMzMzPzAAD/////////////AAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "excavator_icon_selected"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
