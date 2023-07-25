@@ -27,7 +27,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         if (sprite_main_icon.overlapsWith(sprite_cursor)) {
             click_main_icon()
         } else {
-            for (let value of text_sprites_towers) {
+            for (let value of sprites_towers) {
                 if (sprite_cursor.overlapsWith(value)) {
                     show_tower_menu([value])
                 }
@@ -54,7 +54,7 @@ function short_scale_divider (num: number) {
     return 0
 }
 function create_towers () {
-    text_sprites_towers = []
+    sprites_towers = []
     create_tower("Assistant", 0.1, 47, 48, assets.image`assistant_icon`, assets.image`assistant_icon_selected`, 10)
     create_tower("Paleontologist", 0.5, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 50)
 }
@@ -206,6 +206,12 @@ function short_scale_name (num: number) {
     }
     return 1
 }
+function recalculate_fossils_per_sec () {
+    fossils_per_second = 0
+    for (let value of sprites_towers) {
+        fossils_per_second += sprites.readDataNumber(value, "count") * sprites.readDataNumber(value, "speed")
+    }
+}
 function primitive_tower_price (price: number, index: number) {
     return Math.round(price + index ** 1.25)
 }
@@ -242,7 +248,7 @@ function create_tower (name: string, speed: number, top: number, left: number, i
     sprites.setDataImageValue(local_sprite, "icon", icon)
     sprites.setDataImageValue(local_sprite, "icon_hover", icon_hover)
     update_tower_button([local_sprite])
-    text_sprites_towers.push(local_sprite)
+    sprites_towers.push(local_sprite)
 }
 function try_buy_tower (tower: Sprite, count: number, show_msgs: boolean) {
     local_price = calculate_buy_price([tower], count)
@@ -268,7 +274,7 @@ let last_menu_index = 0
 let menu_tower: miniMenu.MenuSprite = null
 let menu_items_tower: miniMenu.MenuItem[] = []
 let local_sprite: Sprite = null
-let text_sprites_towers: Sprite[] = []
+let sprites_towers: Sprite[] = []
 let sprite_cursor: Sprite = null
 let sprite_main_icon: Sprite = null
 let cursor_enabled = false
@@ -285,7 +291,7 @@ DEBUG = true
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
-    money = 100000000000000
+    money = 1000000000000
 }
 fossil_price = 1
 fossils_per_second = 0
@@ -337,8 +343,9 @@ game.onUpdate(function () {
         sprite_main_icon.sx = 1
         sprite_main_icon.sy = 1
     }
+    recalculate_fossils_per_sec()
     update_top_bar_text()
-    for (let value of text_sprites_towers) {
+    for (let value of sprites_towers) {
         update_tower_button([value])
     }
 })
