@@ -268,6 +268,52 @@ f333333ff33ff333333f
 f333333333333333333f
 ffffffffffffffffffff
 `;
+            case "image9":
+            case "mining_team_icon":return img`
+ffffffffffffffffffff
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbbffffbbbbbbf
+fbbbbbbbfddddfbbbbbf
+fbbbbbbbbfffddfbbbbf
+fbbbbbbbbbbbfddfbbbf
+fbbbbbbbbbbfefddfbbf
+fbbbbbbbbbfefbfdfbbf
+fbbbbbbbbfefbbfdfbbf
+fbbbbbbbfefbbbfdfbbf
+fbbbbbbfefbbbbbfbbbf
+fbbbbbfefbbbbbbbbbbf
+fbbbbfefbbbbbbbbbbbf
+fbbbfefbbbbbbbbbbbbf
+fbbfefbbbbbbbbbbbbbf
+fbbefbbbbbbbbbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+ffffffffffffffffffff
+`;
+            case "image10":
+            case "mining_team_icon_selected":return img`
+ffffffffffffffffffff
+f333333333333333333f
+f333333333333333333f
+f33333333ffff333333f
+f3333333fddddf33333f
+f33333333fffddf3333f
+f33333333333fddf333f
+f3333333333fefddf33f
+f333333333fef3fdf33f
+f33333333fef33fdf33f
+f3333333fef333fdf33f
+f333333fef33333f333f
+f33333fef3333333333f
+f3333fef33333333333f
+f333fef333333333333f
+f33fef3333333333333f
+f33ef33333333333333f
+f333333333333333333f
+f333333333333333333f
+ffffffffffffffffffff
+`;
         }
         return null;
     })

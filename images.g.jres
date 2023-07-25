@@ -39,6 +39,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "paleontologist_icon_selected"
     },
+    "image9": {
+        "data": "hwQUABQAAAD/////////////AAC/u7u7u7u7u7v7AAC/u7u7u7u7u7v7AAC/u7u7u7u7+777AAC/u7u7u7u777/7AAC/u7u7u7v7/rv7AAC/u7u7u7vvv7v7AAC/u7u7u/v+u7v7AAC/u7+7u++/u7v7AAC/+/27+/67u7v7AAC/+/2777+7u7v7AAC/+/37/ru7u7v7AAC/+93vv7u7u7v7AAC/u9/9u7u7u7v7AAC/u/vd/7+7u7v7AAC/u7vf3f27u7v7AAC/u7v7/7+7u7v7AAC/u7u7u7u7u7v7AAC/u7u7u7u7u7v7AAD/////////////AAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "mining_team_icon"
+    },
+    "image10": {
+        "data": "hwQUABQAAAD/////////////AAA/MzMzMzMzMzPzAAA/MzMzMzMzMzPzAAA/MzMzMzMz8z7zAAA/MzMzMzMz7z/zAAA/MzMzMzPz/jPzAAA/MzMzMzPvPzPzAAA/MzMzM/P+MzPzAAA/Mz8zM+8/MzPzAAA/8/0z8/4zMzPzAAA/8/0z7z8zMzPzAAA/8/3z/jMzMzPzAAA/893vPzMzMzPzAAA/M9/9MzMzMzPzAAA/M/Pd/z8zMzPzAAA/MzPf3f0zMzPzAAA/MzPz/z8zMzPzAAA/MzMzMzMzMzPzAAA/MzMzMzMzMzPzAAD/////////////AAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "mining_team_icon_selected"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

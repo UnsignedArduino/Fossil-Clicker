@@ -57,6 +57,7 @@ function create_towers () {
     sprites_towers = []
     create_tower("Assistant", 0.1, 47, 48, assets.image`assistant_icon`, assets.image`assistant_icon_selected`, 10)
     create_tower("Paleontologist", 0.5, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 50)
+    create_tower("Mining team", 5, 47, 92, assets.image`mining_team_icon`, assets.image`mining_team_icon_selected`, 200)
 }
 function show_tower_menu (tower_in_list: Sprite[]) {
     enable_cursor(false)
@@ -292,7 +293,7 @@ DEBUG = true
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
-    money = 1000
+    money = 10000000000
 }
 fossil_price = 1
 fossils_per_second = 0
