@@ -35,6 +35,16 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+function try_sell_tower (tower: Sprite, count: number) {
+    if (sprites.readDataNumber(tower, "count") >= count) {
+        money += calculate_sell_price([tower], count)
+        sprites.changeDataNumberBy(tower, "count", count * -1)
+        return true
+    } else {
+        game.showLongText("Not enough towers!", DialogLayout.Bottom)
+        return false
+    }
+}
 function short_scale_divider (num: number) {
     for (let index = 0; index <= short_scale_names.length; index++) {
         if (num < 10 ** ((index + 1) * 3) || index == short_scale_names.length - 1) {
@@ -78,8 +88,6 @@ function show_tower_menu (tower_in_list: Sprite[]) {
             return
         } else if (selectedIndex == 1) {
             try_buy_tower(tower_in_list[0], 1)
-            sprites.destroy(menu_tower)
-            show_tower_menu(tower_in_list)
         } else if (selectedIndex == 2) {
             while (true) {
                 local_quantity = game.askForNumber("Purchase amount: (Blank to cancel)", 6)
@@ -94,13 +102,31 @@ function show_tower_menu (tower_in_list: Sprite[]) {
                     break;
                 }
             }
-            sprites.destroy(menu_tower)
-            show_tower_menu(tower_in_list)
+        } else if (selectedIndex == 3) {
+            try_sell_tower(tower_in_list[0], 1)
+        } else if (selectedIndex == 4) {
+            while (true) {
+                local_quantity = game.askForNumber("Sell amount: (Blank to cancel)", 6)
+                if (is_nan(local_quantity) || local_quantity == 0) {
+                    break;
+                }
+                if (local_quantity < 0 || Math.round(local_quantity) != local_quantity) {
+                    game.showLongText("Quantity must be a natural number!", DialogLayout.Bottom)
+                    continue;
+                }
+                if (try_sell_tower(tower_in_list[0], local_quantity)) {
+                    break;
+                }
+            }
         }
+        sprites.destroy(menu_tower)
+        show_tower_menu(tower_in_list)
     })
     menu_tower.setButtonEventsEnabled(false)
-    for (let index = 0; index < last_menu_index; index++) {
-        menu_tower.moveSelection(miniMenu.MoveDirection.Down)
+    if (last_menu_index < menu_items_tower.length) {
+        for (let index = 0; index < last_menu_index; index++) {
+            menu_tower.moveSelection(miniMenu.MoveDirection.Down)
+        }
     }
     timer.background(function () {
         pauseUntil(() => !(controller.A.isPressed()))
@@ -157,7 +183,7 @@ function short_scale_name (num: number) {
     return 1
 }
 function primitive_tower_price (price: number, index: number) {
-    return Math.round(price + sprites.readDataNumber(local_sprite, "count") ** 1.25)
+    return Math.round(price + index ** 1.25)
 }
 function click_main_icon () {
     big_icon_until = game.runtime() + 100
