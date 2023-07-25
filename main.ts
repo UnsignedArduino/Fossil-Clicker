@@ -18,7 +18,7 @@ function create_label (text: string, top: number, left: number) {
     local_text_sprite = textsprite.create(text, 0, 15)
     local_text_sprite.top = top
     local_text_sprite.left = left
-    local_text_sprite.setFlag(SpriteFlag.Ghost, true)
+    local_text_sprite.setFlag(SpriteFlag.Ghost, !(DEBUG))
     local_text_sprite.setFlag(SpriteFlag.RelativeToCamera, true)
     return local_text_sprite
 }
@@ -252,8 +252,13 @@ let short_scale_names: string[] = []
 let fossils_per_second = 0
 let fossil_price = 0
 let money = 0
+let DEBUG = false
+DEBUG = true
 stats.turnStats(true)
 money = 0
+if (DEBUG) {
+    money = 1000
+}
 fossil_price = 1
 fossils_per_second = 0
 // https://en.wikipedia.org/wiki/Long_and_short_scales
@@ -284,6 +289,10 @@ short_scale_names = [
 ]
 scene.setBackgroundColor(14)
 scene.setBackgroundImage(assets.image`background`)
+if (DEBUG) {
+    scene.setBackgroundColor(2)
+    scene.backgroundImage().replace(1, 2)
+}
 create_cursor()
 enable_cursor(true)
 create_ui()
