@@ -85,16 +85,16 @@ function show_tower_menu (tower_in_list: Sprite[]) {
     menu_tower.setMenuStyleProperty(miniMenu.MenuStyleProperty.BackgroundColor, images.colorBlock(1))
     menu_tower.onButtonPressed(controller.A, function (selection, selectedIndex) {
         last_menu_index = selectedIndex
-        if (selectedIndex == 0) {
+        if (selection.includes("Cancel")) {
             sprites.destroy(menu_tower)
             timer.background(function () {
                 pauseUntil(() => !(controller.A.isPressed()))
                 enable_cursor(true)
             })
             return
-        } else if (selectedIndex == 1) {
+        } else if (selection.includes("Buy 1")) {
             try_buy_tower(tower_in_list[0], 1, true)
-        } else if (selectedIndex == 2) {
+        } else if (selection.includes("Buy...")) {
             while (true) {
                 local_quantity = game.askForNumber("Purchase amount: (Blank to cancel)", 6)
                 if (is_nan(local_quantity) || local_quantity == 0) {
@@ -108,9 +108,10 @@ function show_tower_menu (tower_in_list: Sprite[]) {
                     break;
                 }
             }
-        } else if (selectedIndex == 3) {
+        } else if (selection.includes("Buy max")) {
             menu_tower.setButtonEventsEnabled(false)
             local_buy = 1
+            local_started = sprites.readDataNumber(tower_in_list[0], "count")
             while (try_buy_tower(tower_in_list[0], local_buy, false)) {
                 local_buy += 1
             }
@@ -120,9 +121,10 @@ function show_tower_menu (tower_in_list: Sprite[]) {
                     break;
                 }
             }
-        } else if (selectedIndex == 4) {
+            game.showLongText("Bought " + (sprites.readDataNumber(tower_in_list[0], "count") - local_started) + " towers.", DialogLayout.Bottom)
+        } else if (selection.includes("Sell 1")) {
             try_sell_tower(tower_in_list[0], 1)
-        } else if (selectedIndex == 5) {
+        } else if (selection.includes("Sell...")) {
             while (true) {
                 local_quantity = game.askForNumber("Sell amount: (Blank to cancel)", 6)
                 if (is_nan(local_quantity) || local_quantity == 0) {
@@ -136,8 +138,10 @@ function show_tower_menu (tower_in_list: Sprite[]) {
                     break;
                 }
             }
-        } else if (selectedIndex == 6) {
+        } else if (selection.includes("Sell all")) {
+            local_started = sprites.readDataNumber(tower_in_list[0], "count")
             try_sell_tower(tower_in_list[0], sprites.readDataNumber(tower_in_list[0], "count"))
+            game.showLongText("Sold " + local_started + " towers.", DialogLayout.Bottom)
         }
         sprites.destroy(menu_tower)
         show_tower_menu(tower_in_list)
@@ -257,6 +261,7 @@ let local_price = 0
 let big_icon_until = 0
 let local_sum = 0
 let sprite_cursor_image: Sprite = null
+let local_started = 0
 let local_buy = 0
 let local_quantity = 0
 let last_menu_index = 0
