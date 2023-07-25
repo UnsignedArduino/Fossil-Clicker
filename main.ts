@@ -263,6 +263,7 @@ function try_buy_tower (tower: Sprite, count: number, show_msgs: boolean) {
         return false
     }
 }
+let last_money_update = 0
 let local_price = 0
 let big_icon_until = 0
 let local_sum = 0
@@ -291,7 +292,7 @@ DEBUG = true
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
-    money = 1000000000000
+    money = 1000
 }
 fossil_price = 1
 fossils_per_second = 0
@@ -344,6 +345,8 @@ game.onUpdate(function () {
         sprite_main_icon.sy = 1
     }
     recalculate_fossils_per_sec()
+    money += fossils_per_second * ((game.runtime() - last_money_update) / 1000) * fossil_price
+    last_money_update = game.runtime()
     update_top_bar_text()
     for (let value of sprites_towers) {
         update_tower_button([value])
