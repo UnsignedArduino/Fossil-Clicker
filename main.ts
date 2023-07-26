@@ -12,6 +12,30 @@ namespace SpriteKind {
  * 
  * Excavator: 0.05
  */
+function create_upgrades () {
+    upgrades = [
+    "Slightly bigger fossils | Slightly bigger fossils yield double the amount. | $50 | price*=2",
+    "Somewhat bigger fossils | Somewhat bigger fossils yield double the amount. | $100 | price*=2",
+    "Assistant raises | Your assistants work twice as hard. | $75 | assistant*=2",
+    "Assistant bonuses | Bonuses encourage the assistants to work twice as hard. | $150 | assistant*=2",
+    "Manual cleaning | Fossils manually clicked earn double. | $150 | click*=2",
+    "Coffee and tea stations | Caffeine increases assistant speed by 50%. | $100 | assistant*=1.5",
+    "Upgraded tools | Paleontologist's speed increased by 25%. | $200 | paleontologist*=1.25",
+    "Assistant to the assistant | The assistants offload the even more boring work to their assistants, doubling their speed. | $300 | assistant*=2",
+    "Bigger fossils | Bigger fossils yield double the amount. | $400 | price*=2",
+    "Paleontology PhD | Fossils manually clicked earn quadruple. | $800 | click*=4",
+    "Assistant to the paleontologist | Paleontologist's speed increased by 50%. | $400 | paleontologist*=1.5",
+    "Even bigger fossils | Even bigger fossils yield quadruple the amount. | $800 | price*=4",
+    "Verification | Fossils manually clicked are verified and earn quadruple. | $1600 | click*=4",
+    "Haste I | Mining team speed increased by 20%. | $500 | mining_team*=1.2",
+    "Haste II | Mining team speed increased by 20%. | $750 | mining_team*=1.2",
+    "Iron tools | Mining team speed increased by 50%. | $1000 | mining_team*=1.5",
+    "Enhanced hydraulics | Excavator speed increased by 50%. | $3000 | excavator*=1.5",
+    "Overvolt | Excavators are overvolted; speed increased by 25%. | $2500 | excavator*=1.5",
+    "Upgraded cooling | Excavator speed increased by 25%. | $2500 | excavator*=1.5",
+    "Round-the-clock shifts | Excavators run 24/7; speed tripled. | $6000 | excavator*=3"
+    ]
+}
 function format_money (money: number) {
     return "$" + round_to(money / short_scale_divider(money), 2) + short_scale_name(money)
 }
@@ -24,6 +48,7 @@ function create_ui () {
     create_top_section()
     create_main_icon()
     create_towers()
+    create_upgrades()
 }
 function create_label (text: string, top: number, left: number) {
     local_text_sprite = textsprite.create(text, 0, 15)
@@ -296,6 +321,7 @@ let local_text_sprite: TextSprite = null
 let text_sprite_fossils_per_second: TextSprite = null
 let text_sprite_fossil_price: TextSprite = null
 let text_sprite_money: TextSprite = null
+let upgrades: string[] = []
 let short_scale_names: string[] = []
 let fossils_per_second = 0
 let fossil_price = 0
