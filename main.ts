@@ -14,7 +14,7 @@ namespace SpriteKind {
  */
 function create_upgrades () {
     // Upgrade format:
-    // title | description | $price | effect*=x
+    // title | description | $price | effect
     upgrades = [
     "Slightly bigger fossils | Slightly bigger fossils yield double the amount. | $50 | price*=2",
     "Somewhat bigger fossils | Somewhat bigger fossils yield double the amount. | $100 | price*=2",
@@ -51,11 +51,12 @@ function show_upgrades_menu () {
     for (let value of upgrades) {
         // Upgrade format:
         // title | description | $price | effect*=x
-        upgrade = value.split(" | ")
-        menu_items_upgrades.push(miniMenu.createMenuItem("" + upgrade[0] + " (" + upgrade[2] + ") - " + upgrade[1]))
+        local_upgrade = value.split(" | ")
+        local_price = parseFloat(local_upgrade[2].substr(1, local_upgrade[2].length - 1))
+        menu_items_upgrades.push(miniMenu.createMenuItem("" + local_upgrade[0] + " (" + format_money(local_price) + ") - " + local_upgrade[1]))
     }
     menu_upgrades = miniMenu.createMenuFromArray(menu_items_upgrades)
-    menu_upgrades.setTitle("Upgrades (" + upgrades_purchased.length + "/" + upgrades.length + ")")
+    menu_upgrades.setTitle("Upgrades (" + upgrades_purchased.length + "/" + (upgrades.length + upgrades_purchased.length) + ")")
     menu_upgrades.left = 45
     menu_upgrades.top = 31
     menu_upgrades.setDimensions(115, 89)
@@ -66,6 +67,7 @@ function show_upgrades_menu () {
     menu_upgrades.setStyleProperty(miniMenu.StyleKind.Selected, miniMenu.StyleProperty.Background, images.colorBlock(14))
     menu_upgrades.setMenuStyleProperty(miniMenu.MenuStyleProperty.BackgroundColor, images.colorBlock(1))
     menu_upgrades.onButtonPressed(controller.A, function (selection, selectedIndex) {
+        last_menu_index = selectedIndex
         if (selection.includes("Cancel")) {
             sprites.destroy(menu_upgrades)
             timer.background(function () {
@@ -73,11 +75,22 @@ function show_upgrades_menu () {
                 enable_cursor(true)
             })
             return
+        } else {
+            local_upgrade = upgrades[selectedIndex - 1].split(" | ")
+            local_price = parseFloat(local_upgrade[2].substr(1, local_upgrade[2].length - 1))
+            if (money >= local_price) {
+                upgrades_purchased.push(upgrades.removeAt(selectedIndex - 1))
+                money += local_price * -1
+            } else {
+                game.showLongText("Not enough money! (Price of " + format_money(local_price) + ")", DialogLayout.Bottom)
+                return
+            }
         }
         sprites.destroy(menu_upgrades)
         show_upgrades_menu()
     })
     menu_upgrades.onButtonPressed(controller.B, function (selection, selectedIndex) {
+        last_menu_index = 0
         sprites.destroy(menu_upgrades)
         timer.background(function () {
             pauseUntil(() => !(controller.A.isPressed()))
@@ -85,6 +98,9 @@ function show_upgrades_menu () {
         })
     })
     menu_upgrades.setButtonEventsEnabled(false)
+    for (let index = 0; index < Math.min(last_menu_index, menu_items_upgrades.length - 1); index++) {
+        menu_upgrades.moveSelection(miniMenu.MoveDirection.Down)
+    }
     timer.background(function () {
         pauseUntil(() => !(controller.A.isPressed()))
         menu_upgrades.setButtonEventsEnabled(true)
@@ -238,6 +254,7 @@ function show_tower_menu (tower_in_list: Sprite[]) {
         show_tower_menu(tower_in_list)
     })
     menu_tower.onButtonPressed(controller.B, function (selection, selectedIndex) {
+        last_menu_index = 0
         sprites.destroy(menu_tower)
         timer.background(function () {
             pauseUntil(() => !(controller.A.isPressed()))
@@ -245,10 +262,8 @@ function show_tower_menu (tower_in_list: Sprite[]) {
         })
     })
     menu_tower.setButtonEventsEnabled(false)
-    if (last_menu_index < menu_items_tower.length) {
-        for (let index = 0; index < last_menu_index; index++) {
-            menu_tower.moveSelection(miniMenu.MoveDirection.Down)
-        }
+    for (let index = 0; index < Math.min(last_menu_index, menu_items_tower.length - 1); index++) {
+        menu_tower.moveSelection(miniMenu.MoveDirection.Down)
     }
     timer.background(function () {
         pauseUntil(() => !(controller.A.isPressed()))
@@ -362,14 +377,12 @@ function try_buy_tower (tower: Sprite, count: number, show_msgs: boolean) {
     }
 }
 let last_money_update = 0
-let local_price = 0
 let big_icon_until = 0
 let local_sum = 0
 let sprite_cursor_image: Sprite = null
 let local_started = 0
 let local_buy = 0
 let local_quantity = 0
-let last_menu_index = 0
 let menu_tower: miniMenu.MenuSprite = null
 let menu_items_tower: miniMenu.MenuItem[] = []
 let local_sprite: Sprite = null
@@ -381,11 +394,13 @@ let local_text_sprite: TextSprite = null
 let text_sprite_fossils_per_second: TextSprite = null
 let text_sprite_fossil_price: TextSprite = null
 let text_sprite_money: TextSprite = null
+let last_menu_index = 0
 let menu_upgrades: miniMenu.MenuSprite = null
-let upgrade: string[] = []
+let local_price = 0
+let local_upgrade: string[] = []
 let menu_items_upgrades: miniMenu.MenuItem[] = []
 let sprite_upgrades_button: Sprite = null
-let upgrades_purchased: number[] = []
+let upgrades_purchased: string[] = []
 let upgrades: string[] = []
 let short_scale_names: string[] = []
 let fossils_per_second = 0
@@ -396,7 +411,7 @@ DEBUG = true
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
-    money = 10000000000
+    money = 1000
 }
 fossil_price = 1
 fossils_per_second = 0
