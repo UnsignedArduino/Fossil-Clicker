@@ -106,7 +106,7 @@ function show_upgrades_menu () {
         last_menu_index = 0
         sprites.destroy(menu_upgrades)
         timer.background(function () {
-            pauseUntil(() => !(controller.A.isPressed()))
+            pauseUntil(() => !(controller.B.isPressed()))
             enable_cursor(true)
         })
     })
@@ -270,7 +270,7 @@ function show_tower_menu (tower_in_list: Sprite[]) {
         last_menu_index = 0
         sprites.destroy(menu_tower)
         timer.background(function () {
-            pauseUntil(() => !(controller.A.isPressed()))
+            pauseUntil(() => !(controller.B.isPressed()))
             enable_cursor(true)
         })
     })
@@ -304,6 +304,15 @@ function create_cursor () {
     sprite_cursor_image.setFlag(SpriteFlag.Ghost, true)
     sprite_cursor_image.z = 100
 }
+function save_game () {
+    blockSettings.writeNumber("money", money)
+    blockSettings.writeStringArray("upgrades", upgrades)
+    blockSettings.writeStringArray("upgrades_purchased", upgrades_purchased)
+    for (let value of sprites_towers) {
+        blockSettings.writeNumber("count_" + sprites.readDataString(value, "internal_name"), sprites.readDataNumber(value, "count"))
+    }
+    blockSettings.writeBoolean("has_game_save", true)
+}
 function calculate_sell_price (tower_in_list: Sprite[], count: number) {
     local_sprite = tower_in_list[0]
     local_sum = 0
@@ -323,6 +332,19 @@ function update_tower_button (text_sprite_in_list: Sprite[]) {
 }
 function round_to (num: number, places: number) {
     return Math.round(num * 10 ** places) / 10 ** places
+}
+function load_game () {
+    if (blockSettings.readBoolean("has_game_save")) {
+        money = blockSettings.readNumber("money")
+        upgrades = blockSettings.readStringArray("upgrades")
+        upgrades_purchased = blockSettings.readStringArray("upgrades_purchased")
+        for (let value of sprites_towers) {
+            sprites.setDataNumber(value, "count", blockSettings.readNumber("count_" + sprites.readDataString(value, "internal_name")))
+        }
+        return true
+    } else {
+        return false
+    }
 }
 function short_scale_name (num: number) {
     for (let index = 0; index <= short_scale_names.length; index++) {
@@ -368,6 +390,56 @@ function click_main_icon () {
     big_icon_until = game.runtime() + 100
     money += fossil_price * fossil_click_price_multiplier
 }
+controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (spriteutils.isDestroyed(menu_game)) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.MiniMenu)
+        enable_cursor(false)
+        menu_game = miniMenu.createMenuFromArray([miniMenu.createMenuItem("Close"), miniMenu.createMenuItem("Save"), miniMenu.createMenuItem("Delete save")])
+        menu_game.setTitle("Game menu")
+        menu_game.left = 45
+        menu_game.top = 31
+        menu_game.setDimensions(115, 89)
+        menu_game.setMenuStyleProperty(miniMenu.MenuStyleProperty.Border, 1)
+        menu_game.setMenuStyleProperty(miniMenu.MenuStyleProperty.BorderColor, images.colorBlock(15))
+        menu_game.setStyleProperty(miniMenu.StyleKind.Title, miniMenu.StyleProperty.Foreground, images.colorBlock(1))
+        menu_game.setStyleProperty(miniMenu.StyleKind.Title, miniMenu.StyleProperty.Background, images.colorBlock(15))
+        menu_game.setStyleProperty(miniMenu.StyleKind.Selected, miniMenu.StyleProperty.Background, images.colorBlock(14))
+        menu_game.setMenuStyleProperty(miniMenu.MenuStyleProperty.BackgroundColor, images.colorBlock(1))
+        menu_game.onButtonPressed(controller.A, function (selection, selectedIndex) {
+            if (selection.includes("Close")) {
+                sprites.destroy(menu_game)
+                timer.background(function () {
+                    pauseUntil(() => !(controller.A.isPressed()))
+                    enable_cursor(true)
+                })
+            } else if (selection.includes("Save")) {
+                save_game()
+                game.showLongText("Saved game successfully!", DialogLayout.Bottom)
+            } else if (selection.includes("Delete save")) {
+                if (game.ask("Are you sure you want to", "delete your game save?")) {
+                    delete_game()
+                    game.showLongText("Deleted game save successfully!", DialogLayout.Bottom)
+                    game.reset()
+                }
+            }
+        })
+        menu_game.onButtonPressed(controller.B, function (selection, selectedIndex) {
+            sprites.destroy(menu_game)
+            timer.background(function () {
+                pauseUntil(() => !(controller.B.isPressed()))
+                enable_cursor(true)
+            })
+        })
+        menu_game.setButtonEventsEnabled(false)
+        timer.background(function () {
+            pauseUntil(() => !(controller.A.isPressed()))
+            menu_game.setButtonEventsEnabled(true)
+        })
+    } else {
+        sprites.destroy(menu_game)
+        enable_cursor(true)
+    }
+})
 function enable_cursor (en: boolean) {
     if (en) {
         controller.moveSprite(sprite_cursor)
@@ -414,7 +486,11 @@ function try_buy_tower (tower: Sprite, count: number, show_msgs: boolean) {
         return false
     }
 }
+function delete_game () {
+    blockSettings.writeBoolean("has_game_save", false)
+}
 let last_money_update = 0
+let menu_game: miniMenu.MenuSprite = null
 let big_icon_until = 0
 let local_effect_value = 0
 let local_target = ""
@@ -493,6 +569,7 @@ if (DEBUG) {
 create_cursor()
 enable_cursor(true)
 create_ui()
+load_game()
 game.onUpdate(function () {
     sprite_cursor_image.top = sprite_cursor.top
     sprite_cursor_image.left = sprite_cursor.left
