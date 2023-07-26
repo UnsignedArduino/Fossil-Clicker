@@ -2,17 +2,6 @@ namespace SpriteKind {
     export const Tower = SpriteKind.create()
 }
 /**
- * "Efficiency": (delta F/s / price)
- * 
- * Assistant: 0.01
- * 
- * Paleontologist: 0.01
- * 
- * Mining team: 0.025
- * 
- * Excavator: 0.05
- */
-/**
  * price
  * 
  * click
@@ -53,11 +42,15 @@ function create_upgrades () {
     "Feather touch | Fossils manually clicked earn quadruple. | $6000 | click*=4",
     "Gold touch | Fossils manually clicked earn quadruple. | $8000 | click*=4",
     "Popularity | Your fossils are extremely popular, increasing their worth by 25%. | $8000 | price*=1.25",
+    "Upgraded robot hands | Robot hands on submarines are upgraded, increasing their speed by 25%. | $9000 | submarine*=1.25",
     "Popularity II | Your fossils are extremely popular, increasing their worth by 25%. | $10000 | price*=1.25",
     "Even BIGGER fossils | Even BIGGER fossils sell for 50% more. | $12500 | price*=1.5",
+    "Better buoyancy | Submarines can dive deeper, getting 25% more fossils. | $10000 | submarine*=1.25",
+    "Enhanced propellers | Submarine propellers can move faster, getting 25% more fossils. | $15000 | submarine*=1.25",
     "Diamond tools | Mining team speed increased by 50%. | $10000 | mining_team*=1.5",
     "TNT | Mining teams have access to TNT, increasing speed by 25%. | $10000 | mining_team*=1.25",
     "EVEN BIGGER fossils | EVEN BIGGER fossils sell for 25% more. | $14000 | price*=1.25",
+    "Strengthened hull | The hull of the submarine is thicker, allowing it to dive deeper and get 25% more fossils. | $15000 | submarine*=1.25",
     "Diamond touch | Fossils manually clicked earn quadruple. | $15000 | click*=4"
     ]
     upgrades_purchased = []
@@ -187,6 +180,7 @@ function create_towers () {
     create_tower("Paleontologist", 0.5, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 100, "paleontologist")
     create_tower("Mining team", 3, 47, 92, assets.image`mining_team_icon`, assets.image`mining_team_icon_selected`, 500, "mining_team")
     create_tower("Excavator", 10, 47, 114, assets.image`excavator_icon`, assets.image`excavator_icon_selected`, 1000, "excavator")
+    create_tower("Submarine", 50, 47, 136, assets.image`submarine_icon`, assets.image`submarine_icon_selected`, 5000, "submarine")
 }
 function show_tower_menu (tower_in_list: Sprite[]) {
     enable_cursor(false)
@@ -535,7 +529,7 @@ let fossil_click_price_multiplier = 0
 let fossil_price = 0
 let money = 0
 let DEBUG = false
-DEBUG = false
+DEBUG = true
 stats.turnStats(true)
 money = 0
 if (DEBUG) {

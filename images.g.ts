@@ -388,6 +388,52 @@ f3333333333333333333333333333333333333f333333ff333333333333333333333333333333333
 f333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333f
 ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 `;
+            case "image15":
+            case "submarine_icon":return img`
+ffffffffffffffffffff
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbffbbbbbbbbbbf
+fbbbbbbbfbbbbbbbbbbf
+fbbbbbbbfbbbbbbfbbbf
+fbbbbbbfffbbbbffbbbf
+fbbbbbfcccffbfcfbbbf
+fbbbffccccccffcfbbbf
+fbbfccccccccccfffbbf
+fbfccffcffcffccfcfbf
+fbfccffcffcffccfcfbf
+fbbfccccccccccfffbbf
+fbbbffccccccffcfbbbf
+fbbbbbffccffbfcfbbbf
+fbbbbbbbffbbbbffbbbf
+fbbbbbbbbbbbbbbfbbbf
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+ffffffffffffffffffff
+`;
+            case "image16":
+            case "submarine_icon_selected":return img`
+ffffffffffffffffffff
+f333333333333333333f
+f333333333333333333f
+f333333ff3333333333f
+f3333333f3333333333f
+f3333333f333333f333f
+f333333fff3333ff333f
+f33333fcccff3fcf333f
+f333ffccccccffcf333f
+f33fccccccccccfff33f
+f3fccffcffcffccfcf3f
+f3fccffcffcffccfcf3f
+f33fccccccccccfff33f
+f333ffccccccffcf333f
+f33333ffccff3fcf333f
+f3333333ff3333ff333f
+f33333333333333f333f
+f333333333333333333f
+f333333333333333333f
+ffffffffffffffffffff
+`;
         }
         return null;
     })

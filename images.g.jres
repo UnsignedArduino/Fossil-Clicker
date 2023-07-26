@@ -69,6 +69,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "upgrades_button_selected"
     },
+    "image15": {
+        "data": "hwQUABQAAAD/////////////AAC/u7u7u7u7u7v7AAC/u7u7u/+7u7v7AAC/u7u7+8y/u7v7AAC/u7u7z8z8u7v7AAC/u7u7z//8u7v7AAC/u7v7zP/Mv7v7AAC/+7vPzMzMv7v7AAC/+//PzP/M/Lv7AAC/u7vPzP/M/Lv7AAC/u7v7zMzMv7v7AAC/u7v7zP/Mv7v7AAC/u7u7z//8u7v7AAC/u7v7z8z8v7v7AAC/u7vP/MzP/Lv7AAC/u/v//////7/7AAC/u7u7+8y/u7v7AAC/u7u7u/+7u7v7AAC/u7u7u7u7u7v7AAD/////////////AAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "submarine_icon"
+    },
+    "image16": {
+        "data": "hwQUABQAAAD/////////////AAA/MzMzMzMzMzPzAAA/MzMzM/8zMzPzAAA/MzMz88w/MzPzAAA/MzMzz8z8MzPzAAA/MzMzz//8MzPzAAA/MzPzzP/MPzPzAAA/8zPPzMzMPzPzAAA/8//PzP/M/DPzAAA/MzPPzP/M/DPzAAA/MzPzzMzMPzPzAAA/MzPzzP/MPzPzAAA/MzMzz//8MzPzAAA/MzPzz8z8PzPzAAA/MzPP/MzP/DPzAAA/M/P//////z/zAAA/MzMz88w/MzPzAAA/MzMzM/8zMzPzAAA/MzMzMzMzMzPzAAD/////////////AAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "submarine_icon_selected"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
