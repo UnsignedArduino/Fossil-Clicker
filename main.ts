@@ -174,9 +174,9 @@ function short_scale_divider (num: number) {
 function create_towers () {
     sprites_towers = []
     create_tower("Assistant", 0.1, 47, 48, assets.image`assistant_icon`, assets.image`assistant_icon_selected`, 10, "assistant")
-    create_tower("Paleontologist", 0.5, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 50, "paleontologist")
-    create_tower("Mining team", 5, 47, 92, assets.image`mining_team_icon`, assets.image`mining_team_icon_selected`, 200, "mining_team")
-    create_tower("Excavator", 50, 47, 114, assets.image`excavator_icon`, assets.image`excavator_icon_selected`, 1000, "excavator")
+    create_tower("Paleontologist", 0.5, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 100, "paleontologist")
+    create_tower("Mining team", 3, 47, 92, assets.image`mining_team_icon`, assets.image`mining_team_icon_selected`, 500, "mining_team")
+    create_tower("Excavator", 10, 47, 114, assets.image`excavator_icon`, assets.image`excavator_icon_selected`, 1000, "excavator")
 }
 function show_tower_menu (tower_in_list: Sprite[]) {
     enable_cursor(false)
@@ -384,7 +384,7 @@ function recalculate_fossils_per_sec () {
     }
 }
 function primitive_tower_price (price: number, index: number) {
-    return Math.round(price + index ** 1.25)
+    return Math.round(price * 1.25 ** index / (index + 1))
 }
 function click_main_icon () {
     big_icon_until = game.runtime() + 100
@@ -525,11 +525,11 @@ let fossil_click_price_multiplier = 0
 let fossil_price = 0
 let money = 0
 let DEBUG = false
-DEBUG = false
+DEBUG = true
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
-    money = 1000
+    money = 1000000
 }
 fossil_price = 1
 fossil_click_price_multiplier = 1
