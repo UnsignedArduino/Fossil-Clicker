@@ -2,15 +2,17 @@ namespace SpriteKind {
     export const Tower = SpriteKind.create()
 }
 /**
- * "Efficiency": (delta F/s / price)
+ * price
  * 
- * Assistant: 0.01
+ * click
  * 
- * Paleontologist: 0.01
+ * assistant
  * 
- * Mining team: 0.025
+ * paleontologist
  * 
- * Excavator: 0.05
+ * mining_team
+ * 
+ * excavator
  */
 function create_upgrades () {
     // Upgrade format:
@@ -158,12 +160,23 @@ function short_scale_divider (num: number) {
     }
     return 0
 }
+/**
+ * "Efficiency": (delta F/s / price)
+ * 
+ * Assistant: 0.01
+ * 
+ * Paleontologist: 0.01
+ * 
+ * Mining team: 0.025
+ * 
+ * Excavator: 0.05
+ */
 function create_towers () {
     sprites_towers = []
-    create_tower("Assistant", 0.1, 47, 48, assets.image`assistant_icon`, assets.image`assistant_icon_selected`, 10)
-    create_tower("Paleontologist", 0.5, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 50)
-    create_tower("Mining team", 5, 47, 92, assets.image`mining_team_icon`, assets.image`mining_team_icon_selected`, 200)
-    create_tower("Excavator", 50, 47, 114, assets.image`excavator_icon`, assets.image`excavator_icon_selected`, 1000)
+    create_tower("Assistant", 0.1, 47, 48, assets.image`assistant_icon`, assets.image`assistant_icon_selected`, 10, "assistant")
+    create_tower("Paleontologist", 0.5, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 50, "paleontologist")
+    create_tower("Mining team", 5, 47, 92, assets.image`mining_team_icon`, assets.image`mining_team_icon_selected`, 200, "mining_team")
+    create_tower("Excavator", 50, 47, 114, assets.image`excavator_icon`, assets.image`excavator_icon_selected`, 1000, "excavator")
 }
 function show_tower_menu (tower_in_list: Sprite[]) {
     enable_cursor(false)
@@ -319,10 +332,46 @@ function short_scale_name (num: number) {
     }
     return 1
 }
+/**
+ * price
+ * 
+ * click
+ * 
+ * assistant
+ * 
+ * paleontologist
+ * 
+ * mining_team
+ * 
+ * excavator
+ */
 function recalculate_fossils_per_sec () {
     fossils_per_second = 0
+    fossil_price = 1
+    fossil_click_price_multiplier = 1
     for (let value of sprites_towers) {
-        fossils_per_second += sprites.readDataNumber(value, "count") * sprites.readDataNumber(value, "speed")
+        sprites.setDataNumber(value, "speed_multiplier", 1)
+    }
+    for (let value of upgrades_purchased) {
+        local_upgrade = value.split(" | ")
+        local_effect = local_upgrade[3]
+        local_target = local_effect.split("*=")[0]
+        local_effect_value = parseFloat(local_effect.split("*=")[1])
+        if (local_target == "price") {
+            fossil_price = fossil_price * local_effect_value
+        } else if (local_target == "click") {
+            fossil_click_price_multiplier = fossil_click_price_multiplier * local_effect_value
+        } else {
+            for (let value of sprites_towers) {
+                if (local_target == sprites.readDataString(value, "internal_name")) {
+                    sprites.setDataNumber(value, "speed_multiplier", sprites.readDataNumber(value, "speed_multiplier") * local_effect_value)
+                    break;
+                }
+            }
+        }
+    }
+    for (let value of sprites_towers) {
+        fossils_per_second += sprites.readDataNumber(value, "count") * sprites.readDataNumber(value, "speed") * sprites.readDataNumber(value, "speed_multiplier")
     }
 }
 function primitive_tower_price (price: number, index: number) {
@@ -330,7 +379,7 @@ function primitive_tower_price (price: number, index: number) {
 }
 function click_main_icon () {
     big_icon_until = game.runtime() + 100
-    money += fossil_price
+    money += fossil_price * fossil_click_price_multiplier
 }
 function enable_cursor (en: boolean) {
     if (en) {
@@ -349,13 +398,15 @@ function calculate_buy_price (tower_in_list: Sprite[], count: number) {
     }
     return local_sum
 }
-function create_tower (name: string, speed: number, top: number, left: number, icon: Image, icon_hover: Image, price: number) {
+function create_tower (name: string, speed: number, top: number, left: number, icon: Image, icon_hover: Image, price: number, internal_name: string) {
     local_sprite = sprites.create(icon, SpriteKind.Tower)
     local_sprite.setFlag(SpriteFlag.Ghost, false)
     local_sprite.top = top
     local_sprite.left = left
     sprites.setDataString(local_sprite, "name", name)
+    sprites.setDataString(local_sprite, "internal_name", internal_name)
     sprites.setDataNumber(local_sprite, "speed", speed)
+    sprites.setDataNumber(local_sprite, "speed_multiplier", 1)
     sprites.setDataNumber(local_sprite, "count", 0)
     sprites.setDataNumber(local_sprite, "price", price)
     sprites.setDataImageValue(local_sprite, "icon", icon)
@@ -378,6 +429,9 @@ function try_buy_tower (tower: Sprite, count: number, show_msgs: boolean) {
 }
 let last_money_update = 0
 let big_icon_until = 0
+let local_effect_value = 0
+let local_target = ""
+let local_effect = ""
 let local_sum = 0
 let sprite_cursor_image: Sprite = null
 let local_started = 0
@@ -404,16 +458,18 @@ let upgrades_purchased: string[] = []
 let upgrades: string[] = []
 let short_scale_names: string[] = []
 let fossils_per_second = 0
+let fossil_click_price_multiplier = 0
 let fossil_price = 0
 let money = 0
 let DEBUG = false
-DEBUG = true
+DEBUG = false
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
     money = 1000
 }
 fossil_price = 1
+fossil_click_price_multiplier = 1
 fossils_per_second = 0
 // https://en.wikipedia.org/wiki/Long_and_short_scales
 // https://en.wikipedia.org/wiki/Names_of_large_numbers
