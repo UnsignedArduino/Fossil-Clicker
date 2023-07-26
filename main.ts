@@ -29,18 +29,18 @@ function create_upgrades () {
     // Upgrade format:
     // title | description | $price | effect
     upgrades = [
-    "Slightly bigger fossils | Slightly bigger fossils yield double the amount. | $50 | price*=2",
-    "Somewhat bigger fossils | Somewhat bigger fossils yield double the amount. | $100 | price*=2",
+    "Slightly bigger fossils | Slightly bigger fossils sell for 25% more. | $50 | price*=1.25",
+    "Somewhat bigger fossils | Somewhat bigger fossils sell for 25% more. | $100 | price*=1.25",
     "Assistant raises | Your assistants work twice as hard. | $75 | assistant*=2",
     "Assistant bonuses | Bonuses encourage the assistants to work twice as hard. | $150 | assistant*=2",
     "Manual cleaning | Fossils manually clicked earn double. | $150 | click*=2",
     "Coffee and tea stations | Caffeine increases assistant speed by 50%. | $100 | assistant*=1.5",
     "Upgraded tools | Paleontologist's speed increased by 25%. | $200 | paleontologist*=1.25",
     "Assistant to the assistant | The assistants offload the even more boring work to their assistants, doubling their speed. | $300 | assistant*=2",
-    "Bigger fossils | Bigger fossils yield double the amount. | $400 | price*=2",
+    "Bigger fossils | Bigger fossils yield sell for 50% more. | $400 | price*=1.5",
     "Paleontology PhD | Fossils manually clicked earn quadruple. | $800 | click*=4",
     "Assistant to the paleontologist | Paleontologist's speed increased by 50%. | $400 | paleontologist*=1.5",
-    "Even bigger fossils | Even bigger fossils yield quadruple the amount. | $800 | price*=4",
+    "Even bigger fossils | Even bigger fossils sell for 75% more. | $800 | price*=1.75",
     "Verification | Fossils manually clicked are verified and earn quadruple. | $1600 | click*=4",
     "Haste I | Mining team speed increased by 20%. | $500 | mining_team*=1.2",
     "Haste II | Mining team speed increased by 20%. | $750 | mining_team*=1.2",
@@ -48,7 +48,17 @@ function create_upgrades () {
     "Enhanced hydraulics | Excavator speed increased by 50%. | $3000 | excavator*=1.5",
     "Overvolt | Excavators are overvolted; speed increased by 25%. | $2500 | excavator*=1.5",
     "Upgraded cooling | Excavator speed increased by 25%. | $2500 | excavator*=1.5",
-    "Round-the-clock shifts | Excavators run 24/7; speed tripled. | $6000 | excavator*=3"
+    "Round-the-clock shifts | Excavators run 24/7; speed doubled. | $6000 | excavator*=2",
+    "Careful touch | Fossils manually clicked earn quadruple. | $5000 | click*=4",
+    "Feather touch | Fossils manually clicked earn quadruple. | $6000 | click*=4",
+    "Gold touch | Fossils manually clicked earn quadruple. | $8000 | click*=4",
+    "Popularity | Your fossils are extremely popular, increasing their worth by 25%. | $8000 | price*=1.25",
+    "Popularity II | Your fossils are extremely popular, increasing their worth by 25%. | $10000 | price*=1.25",
+    "Even BIGGER fossils | Even BIGGER fossils sell for 50% more. | $12500 | price*=1.5",
+    "Diamond tools | Mining team speed increased by 50%. | $10000 | mining_team*=1.5",
+    "TNT | Mining teams have access to TNT, increasing speed by 25%. | $10000 | mining_team*=1.25",
+    "EVEN BIGGER fossils | EVEN BIGGER fossils sell for 25% more. | $14000 | price*=1.25",
+    "Diamond touch | Fossils manually clicked earn quadruple. | $15000 | click*=4"
     ]
     upgrades_purchased = []
     sprite_upgrades_button = sprites.create(assets.image`upgrades_button`, SpriteKind.Player)
@@ -384,7 +394,7 @@ function recalculate_fossils_per_sec () {
     }
 }
 function primitive_tower_price (price: number, index: number) {
-    return Math.round(price * 1.25 ** index / (index + 1))
+    return Math.round(price * 1.25 ** index)
 }
 function click_main_icon () {
     big_icon_until = game.runtime() + 100
@@ -525,7 +535,7 @@ let fossil_click_price_multiplier = 0
 let fossil_price = 0
 let money = 0
 let DEBUG = false
-DEBUG = true
+DEBUG = false
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
