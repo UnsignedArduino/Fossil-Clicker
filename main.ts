@@ -51,7 +51,13 @@ function create_upgrades () {
     "TNT | Mining teams have access to TNT, increasing speed by 25%. | $10000 | mining_team*=1.25",
     "EVEN BIGGER fossils | EVEN BIGGER fossils sell for 25% more. | $14000 | price*=1.25",
     "Strengthened hull | The hull of the submarine is thicker, allowing it to dive deeper and get 25% more fossils. | $15000 | submarine*=1.25",
-    "Diamond touch | Fossils manually clicked earn quadruple. | $15000 | click*=4"
+    "Diamond touch | Fossils manually clicked earn quadruple. | $15000 | click*=4",
+    "Nuclear-powered submarines | Submarines can run longer and faster, increasing speed by 50%. | %20000 | submarine*=1.5",
+    "Super big fossils | Super big fossils sell for 25% more. | $17500 | price*=1.25",
+    "SUPER big fossils | SUPER big fossils sell for 25% more. | $25000 | price*=1.25",
+    "Double-armed excavators | Excavators get an extra arm, doubling speed. | $22500 | excavator*=2",
+    "Signed fossils | Fossils manually clicked earn quadruple. | $25000 | click*=4",
+    "SUPER BIG fossils | SUPER BIG fossils sell for 25% more. | $25000 | price*=1.25"
     ]
     upgrades_purchased = []
     sprite_upgrades_button = sprites.create(assets.image`upgrades_button`, SpriteKind.Player)
@@ -529,7 +535,7 @@ let fossil_click_price_multiplier = 0
 let fossil_price = 0
 let money = 0
 let DEBUG = false
-DEBUG = true
+DEBUG = false
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
