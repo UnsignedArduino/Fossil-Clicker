@@ -2,6 +2,17 @@ namespace SpriteKind {
     export const Tower = SpriteKind.create()
 }
 /**
+ * "Efficiency": (delta F/s / price)
+ * 
+ * Assistant: 0.01
+ * 
+ * Paleontologist: 0.01
+ * 
+ * Mining team: 0.025
+ * 
+ * Excavator: 0.05
+ */
+/**
  * price
  * 
  * click
@@ -160,17 +171,6 @@ function short_scale_divider (num: number) {
     }
     return 0
 }
-/**
- * "Efficiency": (delta F/s / price)
- * 
- * Assistant: 0.01
- * 
- * Paleontologist: 0.01
- * 
- * Mining team: 0.025
- * 
- * Excavator: 0.05
- */
 function create_towers () {
     sprites_towers = []
     create_tower("Assistant", 0.1, 47, 48, assets.image`assistant_icon`, assets.image`assistant_icon_selected`, 10, "assistant")
@@ -332,19 +332,6 @@ function short_scale_name (num: number) {
     }
     return 1
 }
-/**
- * price
- * 
- * click
- * 
- * assistant
- * 
- * paleontologist
- * 
- * mining_team
- * 
- * excavator
- */
 function recalculate_fossils_per_sec () {
     fossils_per_second = 0
     fossil_price = 1
