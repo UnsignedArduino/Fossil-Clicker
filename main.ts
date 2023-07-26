@@ -42,6 +42,36 @@ function create_upgrades () {
 function format_money (money: number) {
     return "$" + round_to(money / short_scale_divider(money), 2) + short_scale_name(money)
 }
+function show_upgrades_menu () {
+    enable_cursor(false)
+    menu_items_upgrades = [miniMenu.createMenuItem("Cancel")]
+    menu_upgrades = miniMenu.createMenuFromArray(menu_items_upgrades)
+    menu_upgrades.setTitle("Upgrades")
+    menu_upgrades.left = 45
+    menu_upgrades.top = 31
+    menu_upgrades.setDimensions(115, 89)
+    menu_upgrades.setMenuStyleProperty(miniMenu.MenuStyleProperty.Border, 1)
+    menu_upgrades.setMenuStyleProperty(miniMenu.MenuStyleProperty.BorderColor, images.colorBlock(15))
+    menu_upgrades.setStyleProperty(miniMenu.StyleKind.Title, miniMenu.StyleProperty.Foreground, images.colorBlock(1))
+    menu_upgrades.setStyleProperty(miniMenu.StyleKind.Title, miniMenu.StyleProperty.Background, images.colorBlock(15))
+    menu_upgrades.setStyleProperty(miniMenu.StyleKind.Selected, miniMenu.StyleProperty.Background, images.colorBlock(14))
+    menu_upgrades.setMenuStyleProperty(miniMenu.MenuStyleProperty.BackgroundColor, images.colorBlock(1))
+    menu_upgrades.onButtonPressed(controller.A, function (selection, selectedIndex) {
+        if (selection.includes("Cancel")) {
+            sprites.destroy(menu_upgrades)
+            timer.background(function () {
+                pauseUntil(() => !(controller.A.isPressed()))
+                enable_cursor(true)
+            })
+            return
+        }
+    })
+    menu_upgrades.setButtonEventsEnabled(false)
+    timer.background(function () {
+        pauseUntil(() => !(controller.A.isPressed()))
+        menu_upgrades.setButtonEventsEnabled(true)
+    })
+}
 function create_top_section () {
     text_sprite_money = create_label("", 3, 3)
     text_sprite_fossil_price = create_label("", 12, 3)
@@ -63,8 +93,10 @@ function create_label (text: string, top: number, left: number) {
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (cursor_enabled) {
-        if (sprite_main_icon.overlapsWith(sprite_cursor)) {
+        if (sprite_cursor.overlapsWith(sprite_main_icon)) {
             click_main_icon()
+        } else if (sprite_cursor.overlapsWith(sprite_upgrades_button)) {
+            show_upgrades_menu()
         } else {
             for (let value of sprites_towers) {
                 if (sprite_cursor.overlapsWith(value)) {
@@ -317,13 +349,15 @@ let menu_tower: miniMenu.MenuSprite = null
 let menu_items_tower: miniMenu.MenuItem[] = []
 let local_sprite: Sprite = null
 let sprites_towers: Sprite[] = []
-let sprite_cursor: Sprite = null
 let sprite_main_icon: Sprite = null
+let sprite_cursor: Sprite = null
 let cursor_enabled = false
 let local_text_sprite: TextSprite = null
 let text_sprite_fossils_per_second: TextSprite = null
 let text_sprite_fossil_price: TextSprite = null
 let text_sprite_money: TextSprite = null
+let menu_upgrades: miniMenu.MenuSprite = null
+let menu_items_upgrades: miniMenu.MenuItem[] = []
 let sprite_upgrades_button: Sprite = null
 let upgrades: string[] = []
 let short_scale_names: string[] = []
