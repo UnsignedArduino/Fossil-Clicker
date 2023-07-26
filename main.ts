@@ -35,6 +35,9 @@ function create_upgrades () {
     "Upgraded cooling | Excavator speed increased by 25%. | $2500 | excavator*=1.5",
     "Round-the-clock shifts | Excavators run 24/7; speed tripled. | $6000 | excavator*=3"
     ]
+    sprite_upgrades_button = sprites.create(assets.image`upgrades_button`, SpriteKind.Player)
+    sprite_upgrades_button.left = 48
+    sprite_upgrades_button.bottom = 118
 }
 function format_money (money: number) {
     return "$" + round_to(money / short_scale_divider(money), 2) + short_scale_name(money)
@@ -321,6 +324,7 @@ let local_text_sprite: TextSprite = null
 let text_sprite_fossils_per_second: TextSprite = null
 let text_sprite_fossil_price: TextSprite = null
 let text_sprite_money: TextSprite = null
+let sprite_upgrades_button: Sprite = null
 let upgrades: string[] = []
 let short_scale_names: string[] = []
 let fossils_per_second = 0
@@ -389,5 +393,10 @@ game.onUpdate(function () {
     update_top_bar_text()
     for (let value of sprites_towers) {
         update_tower_button([value])
+    }
+    if (sprite_cursor.overlapsWith(sprite_upgrades_button)) {
+        sprite_upgrades_button.setImage(assets.image`upgrades_button_selected`)
+    } else {
+        sprite_upgrades_button.setImage(assets.image`upgrades_button`)
     }
 })
