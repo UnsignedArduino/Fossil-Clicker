@@ -13,6 +13,8 @@ namespace SpriteKind {
  * Excavator: 0.05
  */
 function create_upgrades () {
+    // Upgrade format:
+    // title | description | $price | effect*=x
     upgrades = [
     "Slightly bigger fossils | Slightly bigger fossils yield double the amount. | $50 | price*=2",
     "Somewhat bigger fossils | Somewhat bigger fossils yield double the amount. | $100 | price*=2",
@@ -35,6 +37,7 @@ function create_upgrades () {
     "Upgraded cooling | Excavator speed increased by 25%. | $2500 | excavator*=1.5",
     "Round-the-clock shifts | Excavators run 24/7; speed tripled. | $6000 | excavator*=3"
     ]
+    upgrades_purchased = []
     sprite_upgrades_button = sprites.create(assets.image`upgrades_button`, SpriteKind.Player)
     sprite_upgrades_button.left = 48
     sprite_upgrades_button.bottom = 118
@@ -45,8 +48,14 @@ function format_money (money: number) {
 function show_upgrades_menu () {
     enable_cursor(false)
     menu_items_upgrades = [miniMenu.createMenuItem("Cancel")]
+    for (let value of upgrades) {
+        // Upgrade format:
+        // title | description | $price | effect*=x
+        upgrade = value.split(" | ")
+        menu_items_upgrades.push(miniMenu.createMenuItem("" + upgrade[0] + " (" + upgrade[2] + ") - " + upgrade[1]))
+    }
     menu_upgrades = miniMenu.createMenuFromArray(menu_items_upgrades)
-    menu_upgrades.setTitle("Upgrades")
+    menu_upgrades.setTitle("Upgrades (" + upgrades_purchased.length + "/" + upgrades.length + ")")
     menu_upgrades.left = 45
     menu_upgrades.top = 31
     menu_upgrades.setDimensions(115, 89)
@@ -65,6 +74,15 @@ function show_upgrades_menu () {
             })
             return
         }
+        sprites.destroy(menu_upgrades)
+        show_upgrades_menu()
+    })
+    menu_upgrades.onButtonPressed(controller.B, function (selection, selectedIndex) {
+        sprites.destroy(menu_upgrades)
+        timer.background(function () {
+            pauseUntil(() => !(controller.A.isPressed()))
+            enable_cursor(true)
+        })
     })
     menu_upgrades.setButtonEventsEnabled(false)
     timer.background(function () {
@@ -219,6 +237,13 @@ function show_tower_menu (tower_in_list: Sprite[]) {
         sprites.destroy(menu_tower)
         show_tower_menu(tower_in_list)
     })
+    menu_tower.onButtonPressed(controller.B, function (selection, selectedIndex) {
+        sprites.destroy(menu_tower)
+        timer.background(function () {
+            pauseUntil(() => !(controller.A.isPressed()))
+            enable_cursor(true)
+        })
+    })
     menu_tower.setButtonEventsEnabled(false)
     if (last_menu_index < menu_items_tower.length) {
         for (let index = 0; index < last_menu_index; index++) {
@@ -357,8 +382,10 @@ let text_sprite_fossils_per_second: TextSprite = null
 let text_sprite_fossil_price: TextSprite = null
 let text_sprite_money: TextSprite = null
 let menu_upgrades: miniMenu.MenuSprite = null
+let upgrade: string[] = []
 let menu_items_upgrades: miniMenu.MenuItem[] = []
 let sprite_upgrades_button: Sprite = null
+let upgrades_purchased: number[] = []
 let upgrades: string[] = []
 let short_scale_names: string[] = []
 let fossils_per_second = 0
