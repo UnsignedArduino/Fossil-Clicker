@@ -64,7 +64,7 @@ function create_upgrades () {
 function format_money (money: number) {
     return "$" + round_to(money / short_scale_divider(money), 2) + short_scale_name(money)
 }
-function show_upgrades_menu () {
+function show_upgrades_menu (transition: boolean) {
     enable_cursor(false)
     menu_items_upgrades = [miniMenu.createMenuItem("Cancel")]
     for (let value of upgrades) {
@@ -88,7 +88,7 @@ function show_upgrades_menu () {
     menu_upgrades.onButtonPressed(controller.A, function (selection, selectedIndex) {
         last_menu_index = selectedIndex
         if (selection.includes("Cancel")) {
-            sprites.destroy(menu_upgrades)
+            slide_out_menu(menu_upgrades)
             timer.background(function () {
                 pauseUntil(() => !(controller.A.isPressed()))
                 enable_cursor(true)
@@ -106,11 +106,11 @@ function show_upgrades_menu () {
             }
         }
         sprites.destroy(menu_upgrades)
-        show_upgrades_menu()
+        show_upgrades_menu(false)
     })
     menu_upgrades.onButtonPressed(controller.B, function (selection, selectedIndex) {
         last_menu_index = 0
-        sprites.destroy(menu_upgrades)
+        slide_out_menu(menu_upgrades)
         timer.background(function () {
             pauseUntil(() => !(controller.B.isPressed()))
             enable_cursor(true)
@@ -124,6 +124,9 @@ function show_upgrades_menu () {
         pauseUntil(() => !(controller.A.isPressed()))
         menu_upgrades.setButtonEventsEnabled(true)
     })
+    if (transition) {
+        slide_in_menu(menu_upgrades)
+    }
 }
 function create_top_section () {
     text_sprite_money = create_label("", 3, 3)
@@ -149,7 +152,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         if (sprite_cursor.overlapsWith(sprite_main_icon)) {
             click_main_icon()
         } else if (sprite_cursor.overlapsWith(sprite_upgrades_button)) {
-            show_upgrades_menu()
+            show_upgrades_menu(true)
         } else {
             for (let value of sprites_towers) {
                 if (sprite_cursor.overlapsWith(value)) {
@@ -176,6 +179,10 @@ function short_scale_divider (num: number) {
         }
     }
     return 0
+}
+function slide_out_menu (menu: Sprite) {
+    menu.vx = 10000
+    menu.setFlag(SpriteFlag.AutoDestroy, true)
 }
 function create_towers () {
     sprites_towers = []
@@ -415,6 +422,15 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
         enable_cursor(true)
     }
 })
+function slide_in_menu (menu: Sprite) {
+    menu.left = 160
+    menu.vx = -10000
+    timer.background(function () {
+        pauseUntil(() => menu.left <= 65)
+        menu.left = 45
+        menu.vx = 0
+    })
+}
 function enable_cursor (en: boolean) {
     if (en) {
         controller.moveSprite(sprite_cursor)
@@ -568,7 +584,7 @@ let fossil_price = 0
 let auto_save_enabled = false
 let money = 0
 let DEBUG = false
-DEBUG = false
+DEBUG = true
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
