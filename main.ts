@@ -592,7 +592,7 @@ let fossil_price = 0
 let auto_save_enabled = false
 let money = 0
 let DEBUG = false
-DEBUG = true
+DEBUG = false
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
