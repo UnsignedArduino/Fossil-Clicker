@@ -36,15 +36,25 @@ function create_upgrades () {
     "Enhanced propellers | Submarine propellers can move faster, getting 25% more fossils. | $15000 | submarine*=1.25",
     "Diamond tools | Mining team speed increased by 50%. | $10000 | mining_team*=1.5",
     "TNT | Mining teams have access to TNT, increasing speed by 25%. | $10000 | mining_team*=1.25",
+    "Upgraded equipment | Lab speed increased by 25%. | $15000 | lab*=1.25",
     "EVEN BIGGER fossils | EVEN BIGGER fossils sell for 25% more. | $14000 | price*=1.25",
     "Strengthened hull | The hull of the submarine is thicker, allowing it to dive deeper and get 25% more fossils. | $15000 | submarine*=1.25",
     "Diamond touch | Fossils manually clicked earn quadruple. | $15000 | click*=4",
+    "Lab assistants | Lab speed increased by 50%. | $20000 | lab*=1.5",
     "Nuclear-powered submarines | Submarines can run longer and faster, increasing speed by 50%. | %20000 | submarine*=1.5",
+    "Bring your children to work day | Lab speed increased by 0%. | $0 | lab*=1",
     "Super big fossils | Super big fossils sell for 25% more. | $17500 | price*=1.25",
+    "Larger labs | Lab speed increased by 25%. | $22500 | lab*=1.25",
+    "Precision equipment | Lab speed increased by 25%. | $25000 | lab*=1.25",
     "SUPER big fossils | SUPER big fossils sell for 25% more. | $25000 | price*=1.25",
+    "Larger space ships | Space ships can bring more fossils home, increasing speed by 25%. | $30000 | space_ship*=1.25",
     "Double-armed excavators | Excavators get an extra arm, doubling speed. | $22500 | excavator*=2",
+    "3D printers | Lab speed increased by 25%. | $25000 | lab*=1.25",
     "Signed fossils | Fossils manually clicked earn quadruple. | $25000 | click*=4",
-    "SUPER BIG fossils | SUPER BIG fossils sell for 25% more. | $25000 | price*=1.25"
+    "SUPER BIG fossils | SUPER BIG fossils sell for 25% more. | $25000 | price*=1.25",
+    "Expanded maps | Space ship speed increased by 25%. | $30000 | space_ship*=1.25",
+    "SUPER DUPER BIG fossils | SUPER DUPER BIG fossils sell for 25% more. | $27500 | price*=1.25",
+    "Premium fuel | Space ship speed increased by 25%. | $35000 | space_ship*=1.25"
     ]
     upgrades_purchased = []
     sprite_upgrades_button = sprites.create(assets.image`upgrades_button`, SpriteKind.Player)
