@@ -156,7 +156,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         } else {
             for (let value of sprites_towers) {
                 if (sprite_cursor.overlapsWith(value)) {
-                    show_tower_menu([value])
+                    show_tower_menu([value], true)
                 }
             }
         }
@@ -194,7 +194,7 @@ function create_towers () {
     create_tower("Lab", 150, 83, 48, assets.image`lab_icon`, assets.image`lab_icon_selected`, 12000, "lab", "Cloning fossils has never been easier!")
     create_tower("Space ship", 400, 83, 70, assets.image`space_ship_icon`, assets.image`space_ship_icon_selected`, 25000, "space_ship", "Space ships bring in fossils from other planets!")
 }
-function show_tower_menu (tower_in_list: Sprite[]) {
+function show_tower_menu (tower_in_list: Sprite[], transition: boolean) {
     enable_cursor(false)
     local_sprite = tower_in_list[0]
     menu_items_tower = [
@@ -222,7 +222,7 @@ function show_tower_menu (tower_in_list: Sprite[]) {
     menu_tower.onButtonPressed(controller.A, function (selection, selectedIndex) {
         last_menu_index = selectedIndex
         if (selection.includes("Cancel")) {
-            sprites.destroy(menu_tower)
+            slide_out_menu(menu_tower)
             timer.background(function () {
                 pauseUntil(() => !(controller.A.isPressed()))
                 enable_cursor(true)
@@ -279,12 +279,12 @@ function show_tower_menu (tower_in_list: Sprite[]) {
             try_sell_tower(tower_in_list[0], sprites.readDataNumber(tower_in_list[0], "count"))
             game.showLongText("Sold " + local_started + " towers.", DialogLayout.Bottom)
         }
-        sprites.destroy(menu_tower)
-        show_tower_menu(tower_in_list)
+        slide_out_menu(menu_tower)
+        show_tower_menu(tower_in_list, false)
     })
     menu_tower.onButtonPressed(controller.B, function (selection, selectedIndex) {
         last_menu_index = 0
-        sprites.destroy(menu_tower)
+        slide_out_menu(menu_tower)
         timer.background(function () {
             pauseUntil(() => !(controller.B.isPressed()))
             enable_cursor(true)
@@ -298,6 +298,9 @@ function show_tower_menu (tower_in_list: Sprite[]) {
         pauseUntil(() => !(controller.A.isPressed()))
         menu_tower.setButtonEventsEnabled(true)
     })
+    if (transition) {
+        slide_in_menu(menu_tower)
+    }
 }
 function create_main_icon () {
     sprite_main_icon = sprites.create(assets.image`shovel`, SpriteKind.Player)
@@ -416,7 +419,7 @@ function click_main_icon () {
 }
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     if (spriteutils.isDestroyed(menu_game)) {
-        show_game_menu()
+        show_game_menu(true)
     } else {
         sprites.destroy(menu_game)
         enable_cursor(true)
@@ -484,8 +487,10 @@ function delete_game () {
     }
     blockSettings.writeBoolean("has_game_save", false)
 }
-function show_game_menu () {
-    sprites.destroyAllSpritesOfKind(SpriteKind.MiniMenu)
+function show_game_menu (transition: boolean) {
+    for (let value of sprites.allOfKind(SpriteKind.MiniMenu)) {
+        slide_out_menu(value)
+    }
     enable_cursor(false)
     menu_items_game = [miniMenu.createMenuItem("Close"), miniMenu.createMenuItem("Save"), miniMenu.createMenuItem("Delete save")]
     if (auto_save_enabled) {
@@ -507,7 +512,7 @@ function show_game_menu () {
     menu_game.onButtonPressed(controller.A, function (selection, selectedIndex) {
         last_menu_index = selectedIndex
         if (selection.includes("Close")) {
-            sprites.destroy(menu_game)
+            slide_out_menu(menu_game)
             timer.background(function () {
                 pauseUntil(() => !(controller.A.isPressed()))
                 enable_cursor(true)
@@ -526,12 +531,12 @@ function show_game_menu () {
             auto_save_enabled = selection.includes("Enable")
             save_game()
         }
-        sprites.destroy(menu_game)
-        show_game_menu()
+        slide_out_menu(menu_game)
+        show_game_menu(false)
     })
     menu_game.onButtonPressed(controller.B, function (selection, selectedIndex) {
         last_menu_index = 0
-        sprites.destroy(menu_game)
+        slide_out_menu(menu_game)
         timer.background(function () {
             pauseUntil(() => !(controller.B.isPressed()))
             enable_cursor(true)
@@ -545,6 +550,9 @@ function show_game_menu () {
         pauseUntil(() => !(controller.A.isPressed()))
         menu_game.setButtonEventsEnabled(true)
     })
+    if (transition) {
+        slide_in_menu(menu_game)
+    }
 }
 let last_money_update = 0
 let menu_items_game: miniMenu.MenuItem[] = []
