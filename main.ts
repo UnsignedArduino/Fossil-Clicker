@@ -315,6 +315,9 @@ function create_cursor () {
     sprite_cursor_image.z = 100
 }
 function save_game () {
+    if (DEBUG) {
+        return
+    }
     blockSettings.writeNumber("money", money)
     blockSettings.writeStringArray("upgrades", upgrades)
     blockSettings.writeStringArray("upgrades_purchased", upgrades_purchased)
@@ -344,6 +347,9 @@ function round_to (num: number, places: number) {
     return Math.round(num * 10 ** places) / 10 ** places
 }
 function load_game () {
+    if (DEBUG) {
+        return false
+    }
     if (blockSettings.readBoolean("has_game_save")) {
         money = blockSettings.readNumber("money")
         upgrades = blockSettings.readStringArray("upgrades")
@@ -497,6 +503,9 @@ function try_buy_tower (tower: Sprite, count: number, show_msgs: boolean) {
     }
 }
 function delete_game () {
+    if (DEBUG) {
+        return
+    }
     blockSettings.writeBoolean("has_game_save", false)
 }
 let last_money_update = 0
@@ -535,11 +544,11 @@ let fossil_click_price_multiplier = 0
 let fossil_price = 0
 let money = 0
 let DEBUG = false
-DEBUG = false
+DEBUG = true
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
-    money = 1000000
+    money = 1e+68
 }
 fossil_price = 1
 fossil_click_price_multiplier = 1
