@@ -1,19 +1,6 @@
 namespace SpriteKind {
     export const Tower = SpriteKind.create()
 }
-/**
- * price
- * 
- * click
- * 
- * assistant
- * 
- * paleontologist
- * 
- * mining_team
- * 
- * excavator
- */
 function create_upgrades () {
     // Upgrade format:
     // title | description | $price | effect
@@ -182,11 +169,13 @@ function short_scale_divider (num: number) {
 }
 function create_towers () {
     sprites_towers = []
-    create_tower("Assistant", 0.1, 47, 48, assets.image`assistant_icon`, assets.image`assistant_icon_selected`, 10, "assistant")
-    create_tower("Paleontologist", 0.5, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 100, "paleontologist")
-    create_tower("Mining team", 3, 47, 92, assets.image`mining_team_icon`, assets.image`mining_team_icon_selected`, 500, "mining_team")
-    create_tower("Excavator", 10, 47, 114, assets.image`excavator_icon`, assets.image`excavator_icon_selected`, 1000, "excavator")
-    create_tower("Submarine", 50, 47, 136, assets.image`submarine_icon`, assets.image`submarine_icon_selected`, 5000, "submarine")
+    create_tower("Assistant", 0.1, 47, 48, assets.image`assistant_icon`, assets.image`assistant_icon_selected`, 10, "assistant", "Assistant to help you out!")
+    create_tower("Paleontologist", 0.5, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 100, "paleontologist", "A paleontologist to find fossils for you!")
+    create_tower("Mining team", 3, 47, 92, assets.image`mining_team_icon`, assets.image`mining_team_icon_selected`, 500, "mining_team", "Mining teams go deeper in search of more fossils!")
+    create_tower("Excavator", 10, 47, 114, assets.image`excavator_icon`, assets.image`excavator_icon_selected`, 1000, "excavator", "The excavator can dig out areas very quickly for even more fossils!")
+    create_tower("Submarine", 50, 47, 136, assets.image`submarine_icon`, assets.image`submarine_icon_selected`, 5000, "submarine", "The submarine can go to the bottom of the oceans in search for fossils!")
+    create_tower("Lab", 150, 83, 48, assets.image`lab_icon`, assets.image`lab_icon_selected`, 12000, "lab", "Cloning fossils has never been easier!")
+    create_tower("Space ship", 400, 83, 70, assets.image`space_ship_icon`, assets.image`space_ship_icon_selected`, 25000, "space_ship", "Space ships bring in fossils from other planets!")
 }
 function show_tower_menu (tower_in_list: Sprite[]) {
     enable_cursor(false)
@@ -203,7 +192,7 @@ function show_tower_menu (tower_in_list: Sprite[]) {
         menu_items_tower.push(miniMenu.createMenuItem("Sell all"))
     }
     menu_tower = miniMenu.createMenuFromArray(menu_items_tower)
-    menu_tower.setTitle("" + sprites.readDataString(local_sprite, "name") + " (" + sprites.readDataNumber(local_sprite, "count") + ")")
+    menu_tower.setTitle("" + sprites.readDataString(local_sprite, "name") + " (" + sprites.readDataNumber(local_sprite, "count") + ") - " + sprites.readDataString(local_sprite, "description"))
     menu_tower.left = 45
     menu_tower.top = 31
     menu_tower.setDimensions(115, 89)
@@ -473,13 +462,14 @@ function calculate_buy_price (tower_in_list: Sprite[], count: number) {
     }
     return local_sum
 }
-function create_tower (name: string, speed: number, top: number, left: number, icon: Image, icon_hover: Image, price: number, internal_name: string) {
+function create_tower (name: string, speed: number, top: number, left: number, icon: Image, icon_hover: Image, price: number, internal_name: string, description: string) {
     local_sprite = sprites.create(icon, SpriteKind.Tower)
     local_sprite.setFlag(SpriteFlag.Ghost, false)
     local_sprite.top = top
     local_sprite.left = left
     sprites.setDataString(local_sprite, "name", name)
     sprites.setDataString(local_sprite, "internal_name", internal_name)
+    sprites.setDataString(local_sprite, "description", description)
     sprites.setDataNumber(local_sprite, "speed", speed)
     sprites.setDataNumber(local_sprite, "speed_multiplier", 1)
     sprites.setDataNumber(local_sprite, "count", 0)

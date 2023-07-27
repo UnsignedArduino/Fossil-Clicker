@@ -434,6 +434,98 @@ f333333333333333333f
 f333333333333333333f
 ffffffffffffffffffff
 `;
+            case "image17":
+            case "lab_icon":return img`
+ffffffffffffffffffff
+fbbbbbbbbbbbbbbbbbbf
+fbbbbfffffbbbbbbbbbf
+fbbbbfcccfbbbbbbbbbf
+fbbbbbfcfbbbbbbbbbbf
+fbbbbbfcf11ffbbbbbbf
+fbbbbbfc1991cfbbbbbf
+fbbbbfcc1991ccfbbbbf
+fbbbbfccc11ccccfbbbf
+fbbbbbfcfbbfcccfbbbf
+fbbbbbbfbbbbfccfbbbf
+fbbbbbbbbbbbfccfbbbf
+fbbbbbbbbbbfccfbbbbf
+fbbbbffffffcccfbbbbf
+fbbbbbbbbfcccfbbbbbf
+fbbbbffffccccffbbbbf
+fbbbfccccccccccfbbbf
+fbbbffffffffffffbbbf
+fbbbbbbbbbbbbbbbbbbf
+ffffffffffffffffffff
+`;
+            case "image18":
+            case "lab_icon_selected":return img`
+ffffffffffffffffffff
+f333333333333333333f
+f3333fffff333333333f
+f3333fcccf333333333f
+f33333fcf3333333333f
+f33333fcf11ff333333f
+f33333fc1991cf33333f
+f3333fcc1991ccf3333f
+f3333fccc11ccccf333f
+f33333fcf33fcccf333f
+f333333f3333fccf333f
+f33333333333fccf333f
+f3333333333fccf3333f
+f3333ffffffcccf3333f
+f33333333fcccf33333f
+f3333ffffccccff3333f
+f333fccccccccccf333f
+f333ffffffffffff333f
+f333333333333333333f
+ffffffffffffffffffff
+`;
+            case "image19":
+            case "space_ship_icon":return img`
+ffffffffffffffffffff
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbbffbbbbbbbbf
+fbbbbbbbfccfbbbbbbbf
+fbbbbbbfccccfbbbbbbf
+fbbbbbbfccccfbbbbbbf
+fbbbbbfcc99ccfbbbbbf
+fbbbbbfcc99ccfbbbbbf
+fbbbbffccccccffbbbbf
+fbbbfcfccccccfcfbbbf
+fbbbfcfccccccfcfbbbf
+fbbbfffccccccfffbbbf
+fbbbbbffffffffbbbbbf
+fbbbbbbffffffbbbbbbf
+fbbbbbb552255bbbbbbf
+fbbbbbbb5255bbbbbbbf
+fbbbbbbbb55bbbbbbbbf
+fbbbbbbbb5bbbbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+ffffffffffffffffffff
+`;
+            case "image20":
+            case "space_ship_icon_selected":return img`
+ffffffffffffffffffff
+f333333333333333333f
+f33333333ff33333333f
+f3333333fccf3333333f
+f333333fccccf333333f
+f333333fccccf333333f
+f33333fcc99ccf33333f
+f33333fcc99ccf33333f
+f3333ffccccccff3333f
+f333fcfccccccfcf333f
+f333fcfccccccfcf333f
+f333fffccccccfff333f
+f33333ffffffff33333f
+f333333ffffff333333f
+f333333552255333333f
+f333333352553333333f
+f333333335533333333f
+f333333335333333333f
+f333333333333333333f
+ffffffffffffffffffff
+`;
         }
         return null;
     })
