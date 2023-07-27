@@ -421,7 +421,7 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     if (spriteutils.isDestroyed(menu_game)) {
         show_game_menu(true)
     } else {
-        sprites.destroy(menu_game)
+        slide_out_menu(menu_game)
         enable_cursor(true)
     }
 })
