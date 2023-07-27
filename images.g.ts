@@ -526,6 +526,17 @@ f333333335333333333f
 f333333333333333333f
 ffffffffffffffffffff
 `;
+            case "image21":
+            case "floppy_disk_icon":return img`
+. . . . . . . . 
+. c b b b c . . 
+. c b b b c c . 
+. c c c c c c . 
+. c c c c c c . 
+. c d d d d c . 
+. c d d d d c . 
+. . . . . . . . 
+`;
         }
         return null;
     })

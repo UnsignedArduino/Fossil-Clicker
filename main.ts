@@ -407,49 +407,7 @@ function click_main_icon () {
 }
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     if (spriteutils.isDestroyed(menu_game)) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.MiniMenu)
-        enable_cursor(false)
-        menu_game = miniMenu.createMenuFromArray([miniMenu.createMenuItem("Close"), miniMenu.createMenuItem("Save"), miniMenu.createMenuItem("Delete save")])
-        menu_game.setTitle("Game menu")
-        menu_game.left = 45
-        menu_game.top = 31
-        menu_game.setDimensions(115, 89)
-        menu_game.setMenuStyleProperty(miniMenu.MenuStyleProperty.Border, 1)
-        menu_game.setMenuStyleProperty(miniMenu.MenuStyleProperty.BorderColor, images.colorBlock(15))
-        menu_game.setStyleProperty(miniMenu.StyleKind.Title, miniMenu.StyleProperty.Foreground, images.colorBlock(1))
-        menu_game.setStyleProperty(miniMenu.StyleKind.Title, miniMenu.StyleProperty.Background, images.colorBlock(15))
-        menu_game.setStyleProperty(miniMenu.StyleKind.Selected, miniMenu.StyleProperty.Background, images.colorBlock(14))
-        menu_game.setMenuStyleProperty(miniMenu.MenuStyleProperty.BackgroundColor, images.colorBlock(1))
-        menu_game.onButtonPressed(controller.A, function (selection, selectedIndex) {
-            if (selection.includes("Close")) {
-                sprites.destroy(menu_game)
-                timer.background(function () {
-                    pauseUntil(() => !(controller.A.isPressed()))
-                    enable_cursor(true)
-                })
-            } else if (selection.includes("Save")) {
-                save_game()
-                game.showLongText("Saved game successfully!", DialogLayout.Bottom)
-            } else if (selection.includes("Delete save")) {
-                if (game.ask("Are you sure you want to", "delete your game save?")) {
-                    delete_game()
-                    game.showLongText("Deleted game save successfully!", DialogLayout.Bottom)
-                    game.reset()
-                }
-            }
-        })
-        menu_game.onButtonPressed(controller.B, function (selection, selectedIndex) {
-            sprites.destroy(menu_game)
-            timer.background(function () {
-                pauseUntil(() => !(controller.B.isPressed()))
-                enable_cursor(true)
-            })
-        })
-        menu_game.setButtonEventsEnabled(false)
-        timer.background(function () {
-            pauseUntil(() => !(controller.A.isPressed()))
-            menu_game.setButtonEventsEnabled(true)
-        })
+        show_game_menu()
     } else {
         sprites.destroy(menu_game)
         enable_cursor(true)
@@ -507,6 +465,51 @@ function delete_game () {
         return
     }
     blockSettings.writeBoolean("has_game_save", false)
+}
+function show_game_menu () {
+    sprites.destroyAllSpritesOfKind(SpriteKind.MiniMenu)
+    enable_cursor(false)
+    menu_game = miniMenu.createMenuFromArray([miniMenu.createMenuItem("Close"), miniMenu.createMenuItem("Save"), miniMenu.createMenuItem("Delete save")])
+    menu_game.setTitle("Game menu")
+    menu_game.left = 45
+    menu_game.top = 31
+    menu_game.setDimensions(115, 89)
+    menu_game.setMenuStyleProperty(miniMenu.MenuStyleProperty.Border, 1)
+    menu_game.setMenuStyleProperty(miniMenu.MenuStyleProperty.BorderColor, images.colorBlock(15))
+    menu_game.setStyleProperty(miniMenu.StyleKind.Title, miniMenu.StyleProperty.Foreground, images.colorBlock(1))
+    menu_game.setStyleProperty(miniMenu.StyleKind.Title, miniMenu.StyleProperty.Background, images.colorBlock(15))
+    menu_game.setStyleProperty(miniMenu.StyleKind.Selected, miniMenu.StyleProperty.Background, images.colorBlock(14))
+    menu_game.setMenuStyleProperty(miniMenu.MenuStyleProperty.BackgroundColor, images.colorBlock(1))
+    menu_game.onButtonPressed(controller.A, function (selection, selectedIndex) {
+        if (selection.includes("Close")) {
+            sprites.destroy(menu_game)
+            timer.background(function () {
+                pauseUntil(() => !(controller.A.isPressed()))
+                enable_cursor(true)
+            })
+        } else if (selection.includes("Save")) {
+            save_game()
+            game.showLongText("Saved game successfully!", DialogLayout.Bottom)
+        } else if (selection.includes("Delete save")) {
+            if (game.ask("Are you sure you want to", "delete your game save?")) {
+                delete_game()
+                game.showLongText("Deleted game save successfully!", DialogLayout.Bottom)
+                game.reset()
+            }
+        }
+    })
+    menu_game.onButtonPressed(controller.B, function (selection, selectedIndex) {
+        sprites.destroy(menu_game)
+        timer.background(function () {
+            pauseUntil(() => !(controller.B.isPressed()))
+            enable_cursor(true)
+        })
+    })
+    menu_game.setButtonEventsEnabled(false)
+    timer.background(function () {
+        pauseUntil(() => !(controller.A.isPressed()))
+        menu_game.setButtonEventsEnabled(true)
+    })
 }
 let last_money_update = 0
 let menu_game: miniMenu.MenuSprite = null
@@ -614,4 +617,10 @@ game.onUpdate(function () {
     } else {
         sprite_upgrades_button.setImage(assets.image`upgrades_button`)
     }
+})
+forever(function () {
+    pause(120000)
+    save_game()
+    Notification.waitForNotificationFinish()
+    Notification.notify("Saved game successfully!", 1, assets.image`floppy_disk_icon`)
 })

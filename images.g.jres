@@ -99,6 +99,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "space_ship_icon_selected"
     },
+    "image21": {
+        "data": "hwQIAAgAAAAAAAAAwMzMDLDL3A2wy9wNsMvcDcDM3A0AzMwMAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "floppy_disk_icon"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
