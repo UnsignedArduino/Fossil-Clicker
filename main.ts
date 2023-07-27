@@ -324,6 +324,7 @@ function save_game () {
         blockSettings.writeNumber("count_" + sprites.readDataString(value, "internal_name"), sprites.readDataNumber(value, "count"))
     }
     blockSettings.writeBoolean("has_game_save", true)
+    blockSettings.writeBoolean("auto_save", auto_save_enabled)
 }
 function calculate_sell_price (tower_in_list: Sprite[], count: number) {
     local_sprite = tower_in_list[0]
@@ -356,6 +357,7 @@ function load_game () {
         for (let value of sprites_towers) {
             sprites.setDataNumber(value, "count", blockSettings.readNumber("count_" + sprites.readDataString(value, "internal_name")))
         }
+        auto_save_enabled = blockSettings.readBoolean("auto_save")
         return true
     } else {
         return false
@@ -469,7 +471,13 @@ function delete_game () {
 function show_game_menu () {
     sprites.destroyAllSpritesOfKind(SpriteKind.MiniMenu)
     enable_cursor(false)
-    menu_game = miniMenu.createMenuFromArray([miniMenu.createMenuItem("Close"), miniMenu.createMenuItem("Save"), miniMenu.createMenuItem("Delete save")])
+    menu_items_game = [miniMenu.createMenuItem("Close"), miniMenu.createMenuItem("Save"), miniMenu.createMenuItem("Delete save")]
+    if (auto_save_enabled) {
+        menu_items_game.push(miniMenu.createMenuItem("Disable auto save"))
+    } else {
+        menu_items_game.push(miniMenu.createMenuItem("Enable auto save"))
+    }
+    menu_game = miniMenu.createMenuFromArray(menu_items_game)
     menu_game.setTitle("Game menu")
     menu_game.left = 45
     menu_game.top = 31
@@ -481,12 +489,14 @@ function show_game_menu () {
     menu_game.setStyleProperty(miniMenu.StyleKind.Selected, miniMenu.StyleProperty.Background, images.colorBlock(14))
     menu_game.setMenuStyleProperty(miniMenu.MenuStyleProperty.BackgroundColor, images.colorBlock(1))
     menu_game.onButtonPressed(controller.A, function (selection, selectedIndex) {
+        last_menu_index = selectedIndex
         if (selection.includes("Close")) {
             sprites.destroy(menu_game)
             timer.background(function () {
                 pauseUntil(() => !(controller.A.isPressed()))
                 enable_cursor(true)
             })
+            return
         } else if (selection.includes("Save")) {
             save_game()
             game.showLongText("Saved game successfully!", DialogLayout.Bottom)
@@ -496,9 +506,15 @@ function show_game_menu () {
                 game.showLongText("Deleted game save successfully!", DialogLayout.Bottom)
                 game.reset()
             }
+        } else if (selection.includes("auto save")) {
+            auto_save_enabled = selection.includes("Enable")
+            save_game()
         }
+        sprites.destroy(menu_game)
+        show_game_menu()
     })
     menu_game.onButtonPressed(controller.B, function (selection, selectedIndex) {
+        last_menu_index = 0
         sprites.destroy(menu_game)
         timer.background(function () {
             pauseUntil(() => !(controller.B.isPressed()))
@@ -506,12 +522,16 @@ function show_game_menu () {
         })
     })
     menu_game.setButtonEventsEnabled(false)
+    for (let index = 0; index < Math.min(last_menu_index, menu_items_game.length - 1); index++) {
+        menu_game.moveSelection(miniMenu.MoveDirection.Down)
+    }
     timer.background(function () {
         pauseUntil(() => !(controller.A.isPressed()))
         menu_game.setButtonEventsEnabled(true)
     })
 }
 let last_money_update = 0
+let menu_items_game: miniMenu.MenuItem[] = []
 let menu_game: miniMenu.MenuSprite = null
 let big_icon_until = 0
 let local_effect_value = 0
@@ -545,14 +565,16 @@ let short_scale_names: string[] = []
 let fossils_per_second = 0
 let fossil_click_price_multiplier = 0
 let fossil_price = 0
+let auto_save_enabled = false
 let money = 0
 let DEBUG = false
-DEBUG = true
+DEBUG = false
 stats.turnStats(true)
 money = 0
 if (DEBUG) {
     money = 1e+68
 }
+auto_save_enabled = true
 fossil_price = 1
 fossil_click_price_multiplier = 1
 fossils_per_second = 0
@@ -620,7 +642,9 @@ game.onUpdate(function () {
 })
 forever(function () {
     pause(120000)
-    save_game()
-    Notification.waitForNotificationFinish()
-    Notification.notify("Saved game successfully!", 1, assets.image`floppy_disk_icon`)
+    if (auto_save_enabled) {
+        save_game()
+        Notification.waitForNotificationFinish()
+        Notification.notify("Saved game successfully!", 1, assets.image`floppy_disk_icon`)
+    }
 })
