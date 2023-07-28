@@ -85,7 +85,23 @@ function create_upgrades () {
     "??? | ??? | $100000000000000 | assistant*=100000000000000",
     "hUMONGOUS FOSSILS | hUMONGOUS FOSSILS sell for double. | $55500000000000 | price*=2",
     "Impossibly-sized fossils | Impossibly-sized fossils sell for double. | $60000000000000 | price*=2",
-    "Multi-continental colliders | Colliders are the size of contents, yielding 10x! | $6000000000000000 | particle_accelerator*=10"
+    "Multi-continental colliders | Colliders are the size of contents, yielding 10x! | $6000000000000000 | particle_accelerator*=10",
+    "City-sized fossils | City-sized fossils sell for double. | $120000000000000 | price*=2",
+    "Colliders...in space??? | Colliders in space function twice as good somehow. | $150000000000000 | particle_accelerator*=10",
+    "5-dimensional shovels | 5-dimensional shovels yield twice as many fossils. | $217500000000000 | md_shovel*=2",
+    "6-dimensional shovels | 6-dimensional shovels yield twice as many fossils. | $897500000000000 | md_shovel*=2",
+    "7-dimensional shovels | 7-dimensional shovels yield twice as many fossils. | $3050000000000000 | md_shovel*=2",
+    "Country-sized fossils | Country-sized fossils sell for double. | $3000000000000000 | price*=2",
+    "Colliders in reality holes | Ok this is getting stupid. | $30000000000000000 | particle_accelerator*=2",
+    "8-dimensional shovels | 8-dimensional shovels yield twice as many fossils. | $560000000000000000 | md_shovel*=2",
+    "9-dimensional shovels | 9-dimensional shovels yield twice as many fossils. | $2320000000000000000 | md_shovel*=2",
+    "Continental fossils | Continental fossils sell for 99x. | $5000000000000000000 | price*=99",
+    "Earth-sized fossils | Earth-sized fossils sell for 99x. | $10000000000000000000 | price*=99",
+    "Gas-giant fossils??? | Fossils from gas giants sell for 99x. | $100000000000000000000 | price*=99",
+    "Sun-sized fossils | Sun-sized fossils sell for 99x. | $1000000000000000000000 | price*=99",
+    "Solar-system sized fossils | Solar-system sized fossils sell for 999x. Idk who's buying these. | $100000000000000000000000 | price*=999",
+    "Galaxy-sized fossils | Galaxy-sized fossils sell for 9999x. | $10000000000000000000000000 | price*=9999",
+    "Universe-sized fossils | Universe-sized fossils sell for 99999x. | $1000000000000000000000000000 | price*=99999"
     ]
     if (DEBUG) {
         upgrades_purchased = upgrades
