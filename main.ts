@@ -1,6 +1,27 @@
 namespace SpriteKind {
     export const Tower = SpriteKind.create()
 }
+/**
+ * Assistant: $10
+ * 
+ * Paleontologist: $100
+ * 
+ * Mining team: $700
+ * 
+ * Excavator: $26000
+ * 
+ * Submarine: $118000
+ * 
+ * Lab: $812000
+ * 
+ * Space ship: $2500000
+ * 
+ * Portal: $45000000
+ * 
+ * Particle accelerator: $35500000000
+ * 
+ * Multi-dimensional shovel: $21750000000
+ */
 function create_upgrades () {
     // Upgrade format:
     // title | description | $price | effect
@@ -13,48 +34,48 @@ function create_upgrades () {
     "Coffee and tea stations | Caffeine increases assistant speed by 50%. | $100 | assistant*=1.5",
     "Upgraded tools | Paleontologist's speed increased by 25%. | $200 | paleontologist*=1.25",
     "Assistant to the assistant | The assistants offload the even more boring work to their assistants, doubling their speed. | $300 | assistant*=2",
-    "Bigger fossils | Bigger fossils yield sell for 50% more. | $400 | price*=1.5",
-    "Paleontology PhD | Fossils manually clicked earn quadruple. | $800 | click*=4",
-    "Assistant to the paleontologist | Paleontologist's speed increased by 50%. | $400 | paleontologist*=1.5",
-    "Even bigger fossils | Even bigger fossils sell for 75% more. | $800 | price*=1.75",
-    "Verification | Fossils manually clicked are verified and earn quadruple. | $1600 | click*=4",
-    "Haste I | Mining team speed increased by 20%. | $500 | mining_team*=1.2",
-    "Haste II | Mining team speed increased by 20%. | $750 | mining_team*=1.2",
-    "Iron tools | Mining team speed increased by 50%. | $1000 | mining_team*=1.5",
-    "Enhanced hydraulics | Excavator speed increased by 50%. | $3000 | excavator*=1.5",
-    "Overvolt | Excavators are overvolted; speed increased by 25%. | $2500 | excavator*=1.5",
-    "Upgraded cooling | Excavator speed increased by 25%. | $2500 | excavator*=1.5",
-    "Round-the-clock shifts | Excavators run 24/7; speed doubled. | $6000 | excavator*=2",
-    "Careful touch | Fossils manually clicked earn quadruple. | $5000 | click*=4",
-    "Feather touch | Fossils manually clicked earn quadruple. | $6000 | click*=4",
-    "Gold touch | Fossils manually clicked earn quadruple. | $8000 | click*=4",
-    "Popularity | Your fossils are extremely popular, increasing their worth by 25%. | $8000 | price*=1.25",
-    "Upgraded robot hands | Robot hands on submarines are upgraded, increasing their speed by 25%. | $9000 | submarine*=1.25",
-    "Popularity II | Your fossils are extremely popular, increasing their worth by 25%. | $10000 | price*=1.25",
-    "Even BIGGER fossils | Even BIGGER fossils sell for 50% more. | $12500 | price*=1.5",
-    "Better buoyancy | Submarines can dive deeper, getting 25% more fossils. | $10000 | submarine*=1.25",
-    "Enhanced propellers | Submarine propellers can move faster, getting 25% more fossils. | $15000 | submarine*=1.25",
-    "Diamond tools | Mining team speed increased by 50%. | $10000 | mining_team*=1.5",
-    "TNT | Mining teams have access to TNT, increasing speed by 25%. | $10000 | mining_team*=1.25",
-    "Upgraded equipment | Lab speed increased by 25%. | $15000 | lab*=1.25",
-    "EVEN BIGGER fossils | EVEN BIGGER fossils sell for 25% more. | $14000 | price*=1.25",
-    "Strengthened hull | The hull of the submarine is thicker, allowing it to dive deeper and get 25% more fossils. | $15000 | submarine*=1.25",
-    "Diamond touch | Fossils manually clicked earn quadruple. | $15000 | click*=4",
-    "Lab assistants | Lab speed increased by 50%. | $20000 | lab*=1.5",
-    "Nuclear-powered submarines | Submarines can run longer and faster, increasing speed by 50%. | %20000 | submarine*=1.5",
-    "Bring your children to work day | Lab speed increased by 0%. | $0 | lab*=1",
-    "Super big fossils | Super big fossils sell for 25% more. | $17500 | price*=1.25",
-    "Larger labs | Lab speed increased by 25%. | $22500 | lab*=1.25",
-    "Precision equipment | Lab speed increased by 25%. | $25000 | lab*=1.25",
-    "SUPER big fossils | SUPER big fossils sell for 25% more. | $25000 | price*=1.25",
-    "Larger space ships | Space ships can bring more fossils home, increasing speed by 25%. | $30000 | space_ship*=1.25",
-    "Double-armed excavators | Excavators get an extra arm, doubling speed. | $22500 | excavator*=2",
-    "3D printers | Lab speed increased by 25%. | $25000 | lab*=1.25",
-    "Signed fossils | Fossils manually clicked earn quadruple. | $25000 | click*=4",
-    "SUPER BIG fossils | SUPER BIG fossils sell for 25% more. | $25000 | price*=1.25",
-    "Expanded maps | Space ship speed increased by 25%. | $30000 | space_ship*=1.25",
-    "SUPER DUPER BIG fossils | SUPER DUPER BIG fossils sell for 25% more. | $27500 | price*=1.25",
-    "Premium fuel | Space ship speed increased by 25%. | $35000 | space_ship*=1.25"
+    "Bigger fossils | Bigger fossils yield sell for 50% more. | $600 | price*=1.5",
+    "Paleontology PhD | Fossils manually clicked earn quadruple. | $1800 | click*=4",
+    "Assistant to the paleontologist | Paleontologist's speed increased by 50%. | $1200 | paleontologist*=1.5",
+    "Even bigger fossils | Even bigger fossils sell for 75% more. | $2400 | price*=1.75",
+    "Verification | Fossils manually clicked are verified and earn quadruple. | $3200 | click*=4",
+    "Haste I | Mining team speed increased by 20%. | $5000 | mining_team*=1.2",
+    "Haste II | Mining team speed increased by 20%. | $7500 | mining_team*=1.2",
+    "Iron tools | Mining team speed increased by 50%. | $10000 | mining_team*=1.5",
+    "Enhanced hydraulics | Excavator speed increased by 50%. | $56000 | excavator*=1.5",
+    "Overvolt | Excavators are overvolted; speed increased by 25%. | $75000 | excavator*=1.5",
+    "Upgraded cooling | Excavator speed increased by 25%. | $75000 | excavator*=1.5",
+    "Round-the-clock shifts | Excavators run 24/7; speed doubled. | $225000 | excavator*=2",
+    "Careful touch | Fossils manually clicked earn quadruple. | $500000 | click*=4",
+    "Feather touch | Fossils manually clicked earn quadruple. | $600000 | click*=4",
+    "Gold touch | Fossils manually clicked earn quadruple. | $800000 | click*=4",
+    "Popularity | Your fossils are extremely popular, increasing their worth by 25%. | $850000 | price*=1.25",
+    "Upgraded robot hands | Robot hands on submarines are upgraded, increasing their speed by 25%. | $190000 | submarine*=1.25",
+    "Popularity II | Your fossils are extremely popular, increasing their worth by 25%. | $100000 | price*=1.25",
+    "Even BIGGER fossils | Even BIGGER fossils sell for 50% more. | $125000 | price*=1.5",
+    "Better buoyancy | Submarines can dive deeper, getting 25% more fossils. | $280000 | submarine*=1.25",
+    "Enhanced propellers | Submarine propellers can move faster, getting 25% more fossils. | $370000 | submarine*=1.25",
+    "Diamond tools | Mining team speed increased by 50%. | $100000 | mining_team*=1.5",
+    "TNT | Mining teams have access to TNT, increasing speed by 25%. | $250000 | mining_team*=1.25",
+    "Upgraded equipment | Lab speed increased by 25%. | $1500000 | lab*=1.25",
+    "EVEN BIGGER fossils | EVEN BIGGER fossils sell for 25% more. | $1400000 | price*=1.25",
+    "Strengthened hull | The hull of the submarine is thicker, allowing it to dive deeper and get 25% more fossils. | $786000 | submarine*=1.25",
+    "Diamond touch | Fossils manually clicked earn quadruple. | $4500000 | click*=4",
+    "Lab assistants | Lab speed increased by 50%. | $20000000 | lab*=1.5",
+    "Nuclear-powered submarines | Submarines can run longer and faster, increasing speed by 50%. | $22000000 | submarine*=1.5",
+    "Bring your children to work day | Lab speed increased by 0%. | $150000000 | lab*=1",
+    "Super big fossils | Super big fossils sell for 25% more. | $175000000 | price*=1.25",
+    "Larger labs | Lab speed increased by 25%. | $225000000 | lab*=1.25",
+    "Precision equipment | Lab speed increased by 25%. | $25000000 | lab*=1.25",
+    "SUPER big fossils | SUPER big fossils sell for 25% more. | $25000000 | price*=1.25",
+    "Larger space ships | Space ships can bring more fossils home, increasing speed by 25%. | $300000000 | space_ship*=1.25",
+    "Double-armed excavators | Excavators get an extra arm, doubling speed. | $2250000000 | excavator*=2",
+    "3D printers | Lab speed increased by 25%. | $250000000 | lab*=1.25",
+    "Signed fossils | Fossils manually clicked earn quadruple. | $750000000 | click*=4",
+    "SUPER BIG fossils | SUPER BIG fossils sell for 25% more. | $2500000000 | price*=1.25",
+    "Expanded maps | Space ship speed increased by 25%. | $3000000000 | space_ship*=1.25",
+    "SUPER DUPER BIG fossils | SUPER DUPER BIG fossils sell for 25% more. | $27500000000 | price*=1.25",
+    "Premium fuel | Space ship speed increased by 25%. | $350000000000 | space_ship*=1.25"
     ]
     upgrades_purchased = []
     sprite_upgrades_button = sprites.create(assets.image`upgrades_button`, SpriteKind.Player)
@@ -187,12 +208,15 @@ function slide_out_menu (menu: Sprite) {
 function create_towers () {
     sprites_towers = []
     create_tower("Assistant", 0.1, 47, 48, assets.image`assistant_icon`, assets.image`assistant_icon_selected`, 10, "assistant", "Assistant to help you out!")
-    create_tower("Paleontologist", 0.5, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 100, "paleontologist", "A paleontologist to find fossils for you!")
-    create_tower("Mining team", 3, 47, 92, assets.image`mining_team_icon`, assets.image`mining_team_icon_selected`, 500, "mining_team", "Mining teams go deeper in search of more fossils!")
-    create_tower("Excavator", 10, 47, 114, assets.image`excavator_icon`, assets.image`excavator_icon_selected`, 1000, "excavator", "The excavator can dig out areas very quickly for even more fossils!")
-    create_tower("Submarine", 50, 47, 136, assets.image`submarine_icon`, assets.image`submarine_icon_selected`, 5000, "submarine", "The submarine can go to the bottom of the oceans in search for fossils!")
-    create_tower("Lab", 150, 83, 48, assets.image`lab_icon`, assets.image`lab_icon_selected`, 12000, "lab", "Cloning fossils has never been easier!")
-    create_tower("Space ship", 400, 83, 70, assets.image`space_ship_icon`, assets.image`space_ship_icon_selected`, 25000, "space_ship", "Space ships bring in fossils from other planets!")
+    create_tower("Paleontologist", 1, 47, 70, assets.image`paleontologist_icon`, assets.image`paleontologist_icon_selected`, 100, "paleontologist", "A paleontologist to find fossils for you!")
+    create_tower("Mining team", 12, 47, 92, assets.image`mining_team_icon`, assets.image`mining_team_icon_selected`, 700, "mining_team", "Mining teams go deeper in search of more fossils!")
+    create_tower("Excavator", 86, 47, 114, assets.image`excavator_icon`, assets.image`excavator_icon_selected`, 26000, "excavator", "The excavator can dig out areas very quickly for even more fossils!")
+    create_tower("Submarine", 270, 47, 136, assets.image`submarine_icon`, assets.image`submarine_icon_selected`, 118000, "submarine", "The submarine can go to the bottom of the oceans in search for fossils!")
+    create_tower("Lab", 1980, 83, 48, assets.image`lab_icon`, assets.image`lab_icon_selected`, 812000, "lab", "Cloning fossils has never been easier!")
+    create_tower("Space ship", 26450, 83, 70, assets.image`space_ship_icon`, assets.image`space_ship_icon_selected`, 2500000, "space_ship", "Space ships bring in fossils from other planets!")
+    create_tower("Portal", 389000, 83, 92, assets.image`portal_icon`, assets.image`portal_icon_selected`, 45000000, "portal", "A portal to go back in time to gather more fossils!")
+    create_tower("Particle accelerator", 6500000, 83, 114, assets.image`particle_accelerator_icon`, assets.image`particle_accelerator_icon_selected`, 35500000000, "particle_accelerator", "Apparently smashing particles yields fossils now.")
+    create_tower("Multi-dimensional shovel", 390000000, 83, 136, assets.image`md_shovel_icon`, assets.image`md_shovel_icon_selected`, 21750000000, "md_shovel", "A shovel that tears into the fabric of reality to find more fossils. ")
 }
 function show_tower_menu (tower_in_list: Sprite[], transition: boolean) {
     enable_cursor(false)
@@ -411,7 +435,7 @@ function recalculate_fossils_per_sec () {
     }
 }
 function primitive_tower_price (price: number, index: number) {
-    return Math.round(price * 1.25 ** index)
+    return Math.round(price * 1.15 ** index)
 }
 function click_main_icon () {
     big_icon_until = game.runtime() + 100
@@ -592,7 +616,7 @@ let fossil_price = 0
 let auto_save_enabled = false
 let money = 0
 let DEBUG = false
-DEBUG = false
+DEBUG = true
 stats.turnStats(true)
 money = 0
 if (DEBUG) {

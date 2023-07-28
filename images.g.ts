@@ -537,6 +537,144 @@ ffffffffffffffffffff
 . c d d d d c . 
 . . . . . . . . 
 `;
+            case "image24":
+            case "particle_accelerator_icon":return img`
+ffffffffffffffffffff
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbffffffffbbbbbf
+fbbbbfbbbbbbbbfbbbbf
+fbbbfbbbbbbbbbbfbbbf
+fbbfbbbbbbbbbbbbfbbf
+fbbfbbbbbbbbbbbbfbbf
+fbbfbbbbbbbbbbbbfbbf
+fbbfbbbbbbbbbbbbfbbf
+fbbfbbbbbbbbbbbbfbbf
+fbbfbbbbbbbbbbbbfbbf
+fbbfbbbbbbbbbbbbfbbf
+fbbfbbbbbbbbbbbbfbbf
+fbbbfbbbbbbbbbbfbbbf
+fbbbbfbbbbbbbbfbbbbf
+fbbbbbffffffffbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+ffffffffffffffffffff
+`;
+            case "image22":
+            case "md_shovel_icon":return img`
+ffffffffffffffffffff
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbffffbbfffffbbf
+fbbbffff5ffffcccffbf
+fbbbffffffffcdddcfbf
+fbbffffffffcddddcfbf
+fbffffffffcdddddcfbf
+fbffff5ffffcdddcffbf
+fbffffffffcecdcfffbf
+fbfffffffcecfcfffbbf
+fbffffffcecffffffbbf
+fbbffffcecfffffffbbf
+fbbfffcecffffffffbbf
+fbbffcecfffff5fffbbf
+fbbffecfffffffffbbbf
+fbbfffffffffffffbbbf
+fbbbffffff5ffffbbbbf
+fbbbbbbbffffffbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+ffffffffffffffffffff
+`;
+            case "image23":
+            case "md_shovel_icon_selected":return img`
+ffffffffffffffffffff
+f333333333333333333f
+f33333ffff33fffff33f
+f333ffff5ffffcccff3f
+f333ffffffffcdddcf3f
+f33ffffffffcddddcf3f
+f3ffffffffcdddddcf3f
+f3ffff5ffffcdddcff3f
+f3ffffffffcecdcfff3f
+f3fffffffcecfcfff33f
+f3ffffffcecffffff33f
+f33ffffcecfffffff33f
+f33fffcecffffffff33f
+f33ffcecfffff5fff33f
+f33ffecfffffffff333f
+f33fffffffffffff333f
+f333ffffff5ffff3333f
+f3333333ffffff33333f
+f333333333333333333f
+ffffffffffffffffffff
+`;
+            case "image25":
+            case "particle_accelerator_icon_selected":return img`
+ffffffffffffffffffff
+f333333333333333333f
+f333333333333333333f
+f33333ffffffff33333f
+f3333f33333333f3333f
+f333f3333333333f333f
+f33f333333333333f33f
+f33f333333333333f33f
+f33f333333333333f33f
+f33f333333333333f33f
+f33f333333333333f33f
+f33f333333333333f33f
+f33f333333333333f33f
+f33f333333333333f33f
+f333f3333333333f333f
+f3333f33333333f3333f
+f33333ffffffff33333f
+f333333333333333333f
+f333333333333333333f
+ffffffffffffffffffff
+`;
+            case "image26":
+            case "portal_icon":return img`
+ffffffffffffffffffff
+fbbbbbbbbbbbbbbbbbbf
+fbbbbbbbbffbbbbbbbbf
+fbbbbbbff88ffbbbbbbf
+fbbbbbf999888fbbbbbf
+fbbbbf88899989fbbbbf
+fbbbbf99888988fbbbbf
+fbbbf8889889889fbbbf
+fbbbf8999999899fbbbf
+fbbbf9889998899fbbbf
+fbbbf8889999988fbbbf
+fbbbf8999899889fbbbf
+fbbbf8989898899fbbbf
+fbbbbf98998999fbbbbf
+fbbbbf98898888fbbbbf
+fbbbbbf889988fbbbbbf
+fbbbbbbff88ffbbbbbbf
+fbbbbbbbbffbbbbbbbbf
+fbbbbbbbbbbbbbbbbbbf
+ffffffffffffffffffff
+`;
+            case "image27":
+            case "portal_icon_selected":return img`
+ffffffffffffffffffff
+f333333333333333333f
+f33333333ff33333333f
+f333333ff88ff333333f
+f33333f999888f33333f
+f3333f88899989f3333f
+f3333f99888988f3333f
+f333f8889889889f333f
+f333f8999999899f333f
+f333f9889998899f333f
+f333f8889999988f333f
+f333f8999899889f333f
+f333f8989898899f333f
+f3333f98998999f3333f
+f3333f98898888f3333f
+f33333f889988f33333f
+f333333ff88ff333333f
+f33333333ff33333333f
+f333333333333333333f
+ffffffffffffffffffff
+`;
         }
         return null;
     })
