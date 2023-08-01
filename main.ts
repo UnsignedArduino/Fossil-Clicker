@@ -199,15 +199,17 @@ function create_label (text: string, top: number, left: number) {
     return local_text_sprite
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (cursor_enabled) {
-        if (sprite_cursor.overlapsWith(sprite_main_icon)) {
-            click_main_icon()
-        } else if (sprite_cursor.overlapsWith(sprite_upgrades_button)) {
-            show_upgrades_menu(true)
-        } else {
-            for (let value of sprites_towers) {
-                if (sprite_cursor.overlapsWith(value)) {
-                    show_tower_menu([value], true)
+    if (game_state == "game") {
+        if (cursor_enabled) {
+            if (sprite_cursor.overlapsWith(sprite_main_icon)) {
+                click_main_icon()
+            } else if (sprite_cursor.overlapsWith(sprite_upgrades_button)) {
+                show_upgrades_menu(true)
+            } else {
+                for (let value of sprites_towers) {
+                    if (sprite_cursor.overlapsWith(value)) {
+                        show_tower_menu([value], true)
+                    }
                 }
             }
         }
@@ -472,11 +474,13 @@ function click_main_icon () {
     money += fossil_price * fossil_click_price_multiplier
 }
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (spriteutils.isDestroyed(menu_game)) {
-        show_game_menu(true)
-    } else {
-        slide_out_menu(menu_game)
-        enable_cursor(true)
+    if (game_state == "game") {
+        if (spriteutils.isDestroyed(menu_game)) {
+            show_game_menu(true)
+        } else {
+            slide_out_menu(menu_game)
+            enable_cursor(true)
+        }
     }
 })
 function slide_in_menu (menu: Sprite) {
@@ -645,9 +649,11 @@ let fossil_click_price_multiplier = 0
 let fossil_price = 0
 let auto_save_enabled = false
 let money = 0
+let game_state = ""
 let DEBUG = false
 DEBUG = false
 stats.turnStats(true)
+game_state = "splash"
 money = 0
 if (DEBUG) {
     money = 1e+68
@@ -682,47 +688,57 @@ short_scale_names = [
 " novemdecillion",
 " vigintillion"
 ]
-scene.setBackgroundColor(14)
-scene.setBackgroundImage(assets.image`background`)
-if (DEBUG) {
-    scene.setBackgroundColor(2)
-    scene.backgroundImage().replace(1, 2)
-}
-create_cursor()
-enable_cursor(true)
-create_ui()
-load_game()
+timer.background(function () {
+    while (true) {
+        pause(0)
+    }
+    game_state = "game"
+    scene.setBackgroundColor(14)
+    scene.setBackgroundImage(assets.image`background`)
+    if (DEBUG) {
+        scene.setBackgroundColor(2)
+        scene.backgroundImage().replace(1, 2)
+    }
+    create_cursor()
+    enable_cursor(true)
+    create_ui()
+    load_game()
+})
 game.onUpdate(function () {
-    sprite_cursor_image.top = sprite_cursor.top
-    sprite_cursor_image.left = sprite_cursor.left
-    if (game.runtime() < big_icon_until) {
-        sprite_main_icon.sx = 1.5
-        sprite_main_icon.sy = 1.5
-    } else if (sprite_main_icon.overlapsWith(sprite_cursor)) {
-        sprite_main_icon.sx = 1.25
-        sprite_main_icon.sy = 1.25
-    } else {
-        sprite_main_icon.sx = 1
-        sprite_main_icon.sy = 1
-    }
-    recalculate_fossils_per_sec()
-    money += fossils_per_second * ((game.runtime() - last_money_update) / 1000) * fossil_price
-    last_money_update = game.runtime()
-    update_top_bar_text()
-    for (let value of sprites_towers) {
-        update_tower_button([value])
-    }
-    if (sprite_cursor.overlapsWith(sprite_upgrades_button)) {
-        sprite_upgrades_button.setImage(assets.image`upgrades_button_selected`)
-    } else {
-        sprite_upgrades_button.setImage(assets.image`upgrades_button`)
+    if (game_state == "game") {
+        sprite_cursor_image.top = sprite_cursor.top
+        sprite_cursor_image.left = sprite_cursor.left
+        if (game.runtime() < big_icon_until) {
+            sprite_main_icon.sx = 1.5
+            sprite_main_icon.sy = 1.5
+        } else if (sprite_main_icon.overlapsWith(sprite_cursor)) {
+            sprite_main_icon.sx = 1.25
+            sprite_main_icon.sy = 1.25
+        } else {
+            sprite_main_icon.sx = 1
+            sprite_main_icon.sy = 1
+        }
+        recalculate_fossils_per_sec()
+        money += fossils_per_second * ((game.runtime() - last_money_update) / 1000) * fossil_price
+        last_money_update = game.runtime()
+        update_top_bar_text()
+        for (let value of sprites_towers) {
+            update_tower_button([value])
+        }
+        if (sprite_cursor.overlapsWith(sprite_upgrades_button)) {
+            sprite_upgrades_button.setImage(assets.image`upgrades_button_selected`)
+        } else {
+            sprite_upgrades_button.setImage(assets.image`upgrades_button`)
+        }
     }
 })
 forever(function () {
     pause(120000)
-    if (auto_save_enabled) {
-        save_game()
-        Notification.waitForNotificationFinish()
-        Notification.notify("Saved game successfully!", 1, assets.image`floppy_disk_icon`)
+    if (game_state == "game") {
+        if (auto_save_enabled) {
+            save_game()
+            Notification.waitForNotificationFinish()
+            Notification.notify("Saved game successfully!", 1, assets.image`floppy_disk_icon`)
+        }
     }
 })
