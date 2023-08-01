@@ -11,7 +11,9 @@
         "ColorBlock": "github:UnsignedArduino/ColorBlock#ac7b9500e40045cf1ddd8c5b7481d11bcb317f5f",
         "Timers": "github:microsoft/arcade-timers#v1.1.0",
         "BetterSettings": "github:S0m3randomguy/bettersettings#2023.5.1",
-        "Notifications": "github:UnsignedArduino/Notifications#de6517dcc280cafe902ef212f59d4f55a982c7ec"
+        "Notifications": "github:UnsignedArduino/Notifications#de6517dcc280cafe902ef212f59d4f55a982c7ec",
+        "InhouseLoadingAnimations": "github:unsignedarduino/inhouseloadinganimations#v1.0.0",
+        "Color Fading": "github:jwunderl/pxt-color#v0.2.2"
     },
     "files": [
         "main.blocks",

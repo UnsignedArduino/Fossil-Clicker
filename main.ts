@@ -689,9 +689,13 @@ short_scale_names = [
 " vigintillion"
 ]
 timer.background(function () {
-    while (true) {
-        pause(0)
-    }
+    LoadingAnimations.show_splash()
+    pause(3000)
+    color.startFade(color.originalPalette, color.Black, 2000)
+    color.pauseUntilFadeDone()
+    LoadingAnimations.hide_splash()
+    pause(1000)
+    color.startFade(color.Black, color.originalPalette, 2000)
     game_state = "game"
     scene.setBackgroundColor(14)
     scene.setBackgroundImage(assets.image`background`)
