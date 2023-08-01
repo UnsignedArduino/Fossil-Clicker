@@ -268,6 +268,13 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+function read_setting_as_number (name: string, _default: number) {
+    if (blockSettings.exists(name)) {
+        return blockSettings.readNumber(name)
+    } else {
+        return _default
+    }
+}
 function try_sell_tower (tower: Sprite, count: number) {
     if (sprites.readDataNumber(tower, "count") >= count) {
         money += calculate_sell_price([tower], count)
@@ -437,9 +444,6 @@ function create_cursor () {
     sprite_cursor_image.z = 100
 }
 function save_game () {
-    if (DEBUG) {
-        return
-    }
     blockSettings.writeNumber("money", money)
     blockSettings.writeStringArray("upgrades", upgrades)
     blockSettings.writeStringArray("upgrades_purchased", upgrades_purchased)
@@ -471,18 +475,24 @@ function round_to (num: number, places: number) {
     return Math.round(num * 10 ** places) / 10 ** places
 }
 function load_game () {
-    if (DEBUG) {
-        return false
-    }
     if (blockSettings.readBoolean("has_game_save")) {
-        money = blockSettings.readNumber("money")
+        money = read_setting_as_number("money", 0)
+        all_upgrades = []
+        for (let value of upgrades) {
+            all_upgrades.push(value)
+        }
         upgrades = blockSettings.readStringArray("upgrades")
         upgrades_purchased = blockSettings.readStringArray("upgrades_purchased")
-        for (let value of sprites_towers) {
-            sprites.setDataNumber(value, "count", blockSettings.readNumber("count_" + sprites.readDataString(value, "internal_name")))
+        for (let value of all_upgrades) {
+            if (upgrades.indexOf(value) == -1 && upgrades_purchased.indexOf(value) == -1) {
+                upgrades.push(value)
+            }
         }
-        auto_save_enabled = blockSettings.readBoolean("auto_save")
-        use_exponential_notation = blockSettings.readBoolean("use_exponential_notation")
+        for (let value of sprites_towers) {
+            sprites.setDataNumber(value, "count", read_setting_as_number("count_" + sprites.readDataString(value, "internal_name"), 0))
+        }
+        auto_save_enabled = read_setting_as_bool("auto_save", true)
+        use_exponential_notation = read_setting_as_bool("use_exponential_notation", false)
         return true
     } else {
         return false
@@ -604,6 +614,13 @@ function delete_game () {
     }
     blockSettings.writeBoolean("has_game_save", false)
 }
+function read_setting_as_bool (name: string, _default: boolean) {
+    if (blockSettings.exists(name)) {
+        return blockSettings.readBoolean(name)
+    } else {
+        return _default
+    }
+}
 function show_game_menu (transition: boolean) {
     for (let value of sprites.allOfKind(SpriteKind.MiniMenu)) {
         slide_out_menu(value)
@@ -686,6 +703,7 @@ let big_icon_until = 0
 let local_effect_value = 0
 let local_target = ""
 let local_effect = ""
+let all_upgrades: string[] = []
 let local_sum = 0
 let sprite_cursor_image: Sprite = null
 let local_started = 0
@@ -720,7 +738,7 @@ let auto_save_enabled = false
 let money = 0
 let game_state = ""
 let DEBUG = false
-DEBUG = false
+DEBUG = true
 stats.turnStats(true)
 game_state = "splash"
 money = 0
