@@ -162,7 +162,7 @@ function create_upgrades () {
     sprite_upgrades_button.bottom = 118
 }
 function format_money (money: number) {
-    return "$" + round_to(money / short_scale_divider(money), 2) + scientific_number_end(money)
+    return "$" + round_to(money / short_scale_divider(money), 2) + short_scale_name(money)
 }
 function show_upgrades_menu (transition: boolean) {
     enable_cursor(false)
@@ -558,9 +558,6 @@ function calculate_buy_price (tower_in_list: Sprite[], count: number) {
     }
     return local_sum
 }
-function scientific_number_end (num: number) {
-    return "e+" + Math.ceil(Math.log10(num))
-}
 function create_tower (name: string, speed: number, top: number, left: number, icon: Image, icon_hover: Image, price: number, internal_name: string, description: string) {
     local_sprite = sprites.create(icon, SpriteKind.Tower)
     local_sprite.setFlag(SpriteFlag.Ghost, false)
@@ -709,7 +706,7 @@ stats.turnStats(true)
 game_state = "splash"
 money = 0
 if (DEBUG) {
-    money = 1000000
+    money = 1e+64
 }
 auto_save_enabled = true
 fossil_price = 1
