@@ -738,7 +738,7 @@ let auto_save_enabled = false
 let money = 0
 let game_state = ""
 let DEBUG = false
-DEBUG = true
+DEBUG = false
 stats.turnStats(true)
 game_state = "splash"
 money = 0
