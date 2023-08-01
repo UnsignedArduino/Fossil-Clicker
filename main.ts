@@ -9,39 +9,39 @@ function start_screen () {
         color.pauseUntilFadeDone()
         LoadingAnimations.hide_splash()
         pause(1000)
+        scene.setBackgroundImage(assets.image`splash_background`)
+        text_sprite_temp = textsprite.create("Fossil", 0, 15)
+        text_sprite_temp.setMaxFontHeight(16)
+        text_sprite_temp.top = 11
+        text_sprite_temp.x = 80
+        text_sprite_temp = textsprite.create("Clicker", 0, 15)
+        text_sprite_temp.setMaxFontHeight(16)
+        text_sprite_temp.top = 27
+        text_sprite_temp.x = 80
+        text_sprite_temp = textsprite.create("A game by UnsignedArduino", 0, 1)
+        text_sprite_temp.top = 45
+        text_sprite_temp.x = 80
+        text_sprite_temp = textsprite.create("MakeCode Arcade 8th Game", 0, 15)
+        text_sprite_temp.top = 60
+        text_sprite_temp.x = 80
+        text_sprite_temp = textsprite.create("Jam \"Prehistoric\"", 0, 15)
+        text_sprite_temp.top = 70
+        text_sprite_temp.x = 80
+        text_sprite_temp = textsprite.create("submission", 0, 15)
+        text_sprite_temp.top = 80
+        text_sprite_temp.x = 80
+        text_sprite_temp = textsprite.create("Press A to begin", 0, 1)
+        text_sprite_temp.top = 110
+        text_sprite_temp.x = 80
+        color.startFade(color.Black, color.originalPalette, 2000)
+        color.pauseUntilFadeDone()
+        pauseUntil(() => controller.A.isPressed())
+        color.startFade(color.originalPalette, color.Black, 2000)
+        color.pauseUntilFadeDone()
+        sprites.destroyAllSpritesOfKind(SpriteKind.Text)
+        pause(1000)
+        color.startFade(color.Black, color.originalPalette, 2000)
     }
-    scene.setBackgroundImage(assets.image`splash_background`)
-    text_sprite_temp = textsprite.create("Fossil", 0, 15)
-    text_sprite_temp.setMaxFontHeight(16)
-    text_sprite_temp.top = 11
-    text_sprite_temp.x = 80
-    text_sprite_temp = textsprite.create("Clicker", 0, 15)
-    text_sprite_temp.setMaxFontHeight(16)
-    text_sprite_temp.top = 27
-    text_sprite_temp.x = 80
-    text_sprite_temp = textsprite.create("A game by UnsignedArduino", 0, 1)
-    text_sprite_temp.top = 45
-    text_sprite_temp.x = 80
-    text_sprite_temp = textsprite.create("MakeCode Arcade 8th Game", 0, 15)
-    text_sprite_temp.top = 60
-    text_sprite_temp.x = 80
-    text_sprite_temp = textsprite.create("Jam \"Prehistoric\"", 0, 15)
-    text_sprite_temp.top = 70
-    text_sprite_temp.x = 80
-    text_sprite_temp = textsprite.create("submission", 0, 15)
-    text_sprite_temp.top = 80
-    text_sprite_temp.x = 80
-    text_sprite_temp = textsprite.create("Press A to begin", 0, 1)
-    text_sprite_temp.top = 110
-    text_sprite_temp.x = 80
-    color.startFade(color.Black, color.originalPalette, 2000)
-    color.pauseUntilFadeDone()
-    pauseUntil(() => controller.A.isPressed())
-    color.startFade(color.originalPalette, color.Black, 2000)
-    color.pauseUntilFadeDone()
-    sprites.destroyAllSpritesOfKind(SpriteKind.Text)
-    pause(1000)
-    color.startFade(color.Black, color.originalPalette, 2000)
 }
 /**
  * Assistant: $10
@@ -143,7 +143,14 @@ function create_upgrades () {
     "Sun-sized fossils | Sun-sized fossils sell for 99x. | $1000000000000000000000 | price*=99",
     "Solar-system sized fossils | Solar-system sized fossils sell for 999x. Idk who's buying these. | $100000000000000000000000 | price*=999",
     "Galaxy-sized fossils | Galaxy-sized fossils sell for 9999x. | $10000000000000000000000000 | price*=9999",
-    "Universe-sized fossils | Universe-sized fossils sell for 99999x. | $1000000000000000000000000000 | price*=99999"
+    "Universe-sized fossils | Universe-sized fossils sell for 99999x. | $1000000000000000000000000000 | price*=99999",
+    "??? II  | ??? II | $1000000000000000000000000000000 | paleontologist*=100000000000000",
+    "10-dimensional shovels | 10-dimensional shovels yield twice as many fossils. | $67900000000000000000 | md_shovel*=2",
+    "Colliders within colliders | idek anymore. Making up upgrades are hard. | $327000000000000000000 | particle_accelerator*=2",
+    "Tiny fossils | We're going the other direction now! (x999999) | $1000000000000000000000000000000 | price*=999999",
+    "Molecular fossils | Guys I give up. (x9999999) | $100000000000000000000000000000000 | price*=9999999",
+    "Atomic fossils | ... (x99999999) | $10000000000000000000000000000000000 | price*=99999999",
+    "Sub-atomic fossils | This shouldn't be possible. (x999999999) | $1000000000000000000000000000000000000 | price*=999999999"
     ]
     if (DEBUG) {
         upgrades_purchased = upgrades
@@ -694,7 +701,7 @@ let auto_save_enabled = false
 let money = 0
 let game_state = ""
 let DEBUG = false
-DEBUG = false
+DEBUG = true
 stats.turnStats(true)
 game_state = "splash"
 money = 0
