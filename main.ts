@@ -1,6 +1,48 @@
 namespace SpriteKind {
     export const Tower = SpriteKind.create()
 }
+function start_screen () {
+    if (!(DEBUG)) {
+        LoadingAnimations.show_splash()
+        pause(3000)
+        color.startFade(color.originalPalette, color.Black, 2000)
+        color.pauseUntilFadeDone()
+        LoadingAnimations.hide_splash()
+        pause(1000)
+    }
+    scene.setBackgroundImage(assets.image`splash_background`)
+    text_sprite_temp = textsprite.create("Fossil", 0, 15)
+    text_sprite_temp.setMaxFontHeight(16)
+    text_sprite_temp.top = 11
+    text_sprite_temp.x = 80
+    text_sprite_temp = textsprite.create("Clicker", 0, 15)
+    text_sprite_temp.setMaxFontHeight(16)
+    text_sprite_temp.top = 27
+    text_sprite_temp.x = 80
+    text_sprite_temp = textsprite.create("A game by UnsignedArduino", 0, 1)
+    text_sprite_temp.top = 45
+    text_sprite_temp.x = 80
+    text_sprite_temp = textsprite.create("MakeCode Arcade 8th Game", 0, 15)
+    text_sprite_temp.top = 60
+    text_sprite_temp.x = 80
+    text_sprite_temp = textsprite.create("Jam \"Prehistoric\"", 0, 15)
+    text_sprite_temp.top = 70
+    text_sprite_temp.x = 80
+    text_sprite_temp = textsprite.create("submission", 0, 15)
+    text_sprite_temp.top = 80
+    text_sprite_temp.x = 80
+    text_sprite_temp = textsprite.create("Press A to begin", 0, 1)
+    text_sprite_temp.top = 110
+    text_sprite_temp.x = 80
+    color.startFade(color.Black, color.originalPalette, 2000)
+    color.pauseUntilFadeDone()
+    pauseUntil(() => controller.A.isPressed())
+    color.startFade(color.originalPalette, color.Black, 2000)
+    color.pauseUntilFadeDone()
+    sprites.destroyAllSpritesOfKind(SpriteKind.Text)
+    pause(1000)
+    color.startFade(color.Black, color.originalPalette, 2000)
+}
 /**
  * Assistant: $10
  * 
@@ -643,6 +685,7 @@ let menu_items_upgrades: miniMenu.MenuItem[] = []
 let sprite_upgrades_button: Sprite = null
 let upgrades_purchased: string[] = []
 let upgrades: string[] = []
+let text_sprite_temp: TextSprite = null
 let short_scale_names: string[] = []
 let fossils_per_second = 0
 let fossil_click_price_multiplier = 0
@@ -656,7 +699,7 @@ stats.turnStats(true)
 game_state = "splash"
 money = 0
 if (DEBUG) {
-    money = 1e+68
+    money = 1e+64
 }
 auto_save_enabled = true
 fossil_price = 1
@@ -689,13 +732,7 @@ short_scale_names = [
 " vigintillion"
 ]
 timer.background(function () {
-    LoadingAnimations.show_splash()
-    pause(3000)
-    color.startFade(color.originalPalette, color.Black, 2000)
-    color.pauseUntilFadeDone()
-    LoadingAnimations.hide_splash()
-    pause(1000)
-    color.startFade(color.Black, color.originalPalette, 2000)
+    start_screen()
     game_state = "game"
     scene.setBackgroundColor(14)
     scene.setBackgroundImage(assets.image`background`)
