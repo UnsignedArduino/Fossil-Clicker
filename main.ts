@@ -162,7 +162,11 @@ function create_upgrades () {
     sprite_upgrades_button.bottom = 118
 }
 function format_money (money: number) {
-    return "$" + round_to(money / short_scale_divider(money), 2) + short_scale_name(money)
+    if (use_exponential_notation) {
+        return "$" + Math.toExponential(money, 2)
+    } else {
+        return "$" + round_to(money / short_scale_divider(money), 2) + short_scale_name(money)
+    }
 }
 function show_upgrades_menu (transition: boolean) {
     enable_cursor(false)
@@ -415,7 +419,11 @@ function create_main_icon () {
 function update_top_bar_text () {
     text_sprite_money.setText("Money: " + format_money(money))
     text_sprite_fossil_price.setText("Price: " + format_money(fossil_price))
-    text_sprite_fossils_per_second.setText("F/s: " + round_to(fossils_per_second / short_scale_divider(fossils_per_second), 3) + short_scale_name(fossils_per_second))
+    if (use_exponential_notation) {
+        text_sprite_fossils_per_second.setText("F/s: " + Math.toExponential(fossils_per_second, 3))
+    } else {
+        text_sprite_fossils_per_second.setText("F/s: " + round_to(fossils_per_second / short_scale_divider(fossils_per_second), 3) + short_scale_name(fossils_per_second))
+    }
 }
 function is_nan (num: number) {
     return num != num
@@ -440,6 +448,7 @@ function save_game () {
     }
     blockSettings.writeBoolean("has_game_save", true)
     blockSettings.writeBoolean("auto_save", auto_save_enabled)
+    blockSettings.writeBoolean("use_exponential_notation", use_exponential_notation)
 }
 function calculate_sell_price (tower_in_list: Sprite[], count: number) {
     local_sprite = tower_in_list[0]
@@ -473,6 +482,7 @@ function load_game () {
             sprites.setDataNumber(value, "count", blockSettings.readNumber("count_" + sprites.readDataString(value, "internal_name")))
         }
         auto_save_enabled = blockSettings.readBoolean("auto_save")
+        use_exponential_notation = blockSettings.readBoolean("use_exponential_notation")
         return true
     } else {
         return false
@@ -605,6 +615,11 @@ function show_game_menu (transition: boolean) {
     } else {
         menu_items_game.push(miniMenu.createMenuItem("Enable auto save"))
     }
+    if (use_exponential_notation) {
+        menu_items_game.push(miniMenu.createMenuItem("Disable exponential notation"))
+    } else {
+        menu_items_game.push(miniMenu.createMenuItem("Enable exponential notation"))
+    }
     menu_game = miniMenu.createMenuFromArray(menu_items_game)
     menu_game.setTitle("Game menu")
     menu_game.left = 45
@@ -636,6 +651,9 @@ function show_game_menu (transition: boolean) {
             }
         } else if (selection.includes("auto save")) {
             auto_save_enabled = selection.includes("Enable")
+            save_game()
+        } else if (selection.includes("exponential notation")) {
+            use_exponential_notation = selection.includes("Enable")
             save_game()
         }
         slide_out_menu(menu_game)
@@ -697,6 +715,7 @@ let short_scale_names: string[] = []
 let fossils_per_second = 0
 let fossil_click_price_multiplier = 0
 let fossil_price = 0
+let use_exponential_notation = false
 let auto_save_enabled = false
 let money = 0
 let game_state = ""
@@ -709,6 +728,7 @@ if (DEBUG) {
     money = 1e+64
 }
 auto_save_enabled = true
+use_exponential_notation = false
 fossil_price = 1
 fossil_click_price_multiplier = 1
 fossils_per_second = 0

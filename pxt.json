@@ -14,7 +14,8 @@
         "BetterSettings": "github:S0m3randomguy/bettersettings#2023.5.1",
         "Notifications": "github:UnsignedArduino/Notifications#de6517dcc280cafe902ef212f59d4f55a982c7ec",
         "InhouseLoadingAnimations": "github:unsignedarduino/inhouseloadinganimations#v1.0.0",
-        "Color Fading": "github:jwunderl/pxt-color#v0.2.2"
+        "Color Fading": "github:jwunderl/pxt-color#v0.2.2",
+        "ExtraNumberBlocks": "github:UnsignedArduino/ExtraNumberBlocks#v1.0.0"
     },
     "files": [
         "main.blocks",
